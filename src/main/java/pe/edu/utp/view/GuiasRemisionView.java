@@ -2,7 +2,6 @@ package pe.edu.utp.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import java.awt.Dimension;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -44,6 +43,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         if (subject.equalsIgnoreCase("Iniciar")) {
             this.setTitle((String) params[0]);
             if (((String)params[1]).equals("READ")){
+                CabGuiaRem ent = (CabGuiaRem) params[1];
                 tfl0.setEditable(false);
                 dtp0.setEnabled(false);
                 tfl1.setEditable(false);
@@ -55,6 +55,15 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl7.setEditable(false);
                 btn1.setVisible(false);
                 tbl0.setEnabled(false);
+                tfl0.setText(ent.getCodGuiaRem());
+                dtp0.setDate(ent.getFechaEmi());
+                tfl1.setText(ent.getRucEmpresa());
+                tfl2.setText(ent.getRazSocEmpresa());
+                tfl3.setText(ent.getRucCliente());
+                tfl4.setText(ent.getRazSocCliente());
+                tfl5.setText(ent.getDirecCliente());
+                tfl6.setText(ent.getAlmacenero());
+                tfl7.setText(ent.getBultos().toString());
             }
             if (((String)params[1]).equals("INSERT")){
                 tfl0.setEditable(true);
@@ -70,6 +79,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tbl0.setEnabled(true);
             }
             if (((String)params[1]).equals("UPDATE")){
+                CabGuiaRem ent = (CabGuiaRem) params[1];
                 tfl0.setEditable(false);
                 dtp0.setEnabled(true);
                 tfl1.setEditable(true);
@@ -81,6 +91,15 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl7.setEditable(true);
                 btn1.setVisible(true);
                 tbl0.setEnabled(true);
+                tfl0.setText(ent.getCodGuiaRem());
+                dtp0.setDate(ent.getFechaEmi());
+                tfl1.setText(ent.getRucEmpresa());
+                tfl2.setText(ent.getRazSocEmpresa());
+                tfl3.setText(ent.getRucCliente());
+                tfl4.setText(ent.getRazSocCliente());
+                tfl5.setText(ent.getDirecCliente());
+                tfl6.setText(ent.getAlmacenero());
+                tfl7.setText(ent.getBultos().toString());
             }
         }
         if (subject.equalsIgnoreCase("DltBox")) {

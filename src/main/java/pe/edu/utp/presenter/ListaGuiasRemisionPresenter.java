@@ -1,6 +1,7 @@
 package pe.edu.utp.presenter;
 
 import javax.swing.SwingUtilities;
+import pe.edu.utp.entity.CabGuiaRem;
 import pe.edu.utp.model.GuiasRemisionModel;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.GuiasRemisionView;
@@ -52,7 +53,6 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
                         new GuiasRemisionModel(), 
                         new Object[]{"INSERT"});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
-                //model.updateModel("InsertCabDet", new Object[]{ent});
                 if (cambio){
                     Object[] listObj = model.loadModel("Listar1", params);
                     view.updateView("Refrescar", new Object[]{listObj[0]});
@@ -67,7 +67,6 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
                         new GuiasRemisionModel(), 
                         new Object[]{"UPDATE", params[2]});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
-                //model.updateModel("UpdateCabDet", new Object[]{ent});
                 if (cambio){
                     Object[] listObj = model.loadModel("Listar1", params);
                     view.updateView("Refrescar", new Object[]{listObj[0]});

@@ -11,12 +11,17 @@ public class GuiasRemisionPresenter implements MVPPresenter{
     private String tipoView;
 
     public GuiasRemisionPresenter(MVPView view, MVPModel model, Object[] params) {
+        //tipoview, pk CabGR
         this.model = model;
         this.view = view;
         this.result = new Object[]{(Boolean) true};
         this.tipoView = (((String) params[0]).length()>=0) ? (String) params[0] : "READ";
         view.setPresenter(this);
-        view.updateView("Iniciar", new Object[]{"Guia de Remision", tipoView});
+        CabGuiaRem ent=null;
+        if ( this.tipoView.equalsIgnoreCase("READ") || this.tipoView.equalsIgnoreCase("UPDATE") ){
+            ent = (CabGuiaRem) model.loadModel("CabDet", params)[0];
+        }
+        view.updateView("Iniciar", new Object[]{"Guia de Remision", tipoView, ent});
         view.showView();
     }
     

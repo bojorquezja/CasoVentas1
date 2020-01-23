@@ -2,9 +2,12 @@ package pe.edu.utp;
 
 import javax.swing.SwingUtilities;
 import pe.edu.utp.model.GuiasRemisionModel;
+import pe.edu.utp.model.ListaGuiasRemisionModel;
 import pe.edu.utp.presenter.MVPPresenter;
 import pe.edu.utp.presenter.GuiasRemisionPresenter;
+import pe.edu.utp.presenter.ListaGuiasRemisionPresenter;
 import pe.edu.utp.view.GuiasRemisionView;
+import pe.edu.utp.view.ListaGuiasRemisionView;
 import pe.edu.utp.view.PrincipalView;
 
 public class App{
@@ -25,7 +28,7 @@ public class App{
             java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-/*
+
         SwingUtilities.invokeLater(() -> {
             MVPPresenter p = new ListaGuiasRemisionPresenter(
                     new ListaGuiasRemisionView(null, true), 
@@ -33,7 +36,7 @@ public class App{
                     new Object[]{"MAINTENANCE"});
             System.out.println(p.getResult()[0]);   //prueba
         });
-*/
+/*
         SwingUtilities.invokeLater(() -> {
             MVPPresenter p = new GuiasRemisionPresenter(
                     new GuiasRemisionView(null, true), 
@@ -41,5 +44,6 @@ public class App{
                     new Object[]{"INSERT"});
             System.out.println(p.getResult()[0]);   //prueba
         });
+*/
     }
 }
