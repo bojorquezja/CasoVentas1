@@ -1,11 +1,7 @@
 package pe.edu.utp.presenter;
 
-import java.time.LocalDate;
-import javax.swing.SwingUtilities;
 import pe.edu.utp.entity.CabGuiaRem;
-import pe.edu.utp.model.GuiasRemisionModel;
 import pe.edu.utp.model.MVPModel;
-import pe.edu.utp.view.GuiasRemisionView;
 import pe.edu.utp.view.MVPView;
 
 public class GuiasRemisionPresenter implements MVPPresenter{
@@ -44,12 +40,12 @@ public class GuiasRemisionPresenter implements MVPPresenter{
             //params: CabGuiaRem con Det
             if (this.tipoView.equalsIgnoreCase("INSERT")){
                 CabGuiaRem ent = (CabGuiaRem) params[0];
-                model.updateModel("InsertCabDet", new Object[]{ent});
+                model.updateModel("InsertCabDet", new Object[]{ ent });
                 result = new Object[]{(Boolean) true};
             }
             if (this.tipoView.equalsIgnoreCase("UPDATE")){
                 CabGuiaRem ent = (CabGuiaRem) params[0];
-                model.updateModel("UpdateCabDet", new Object[]{ent});
+                model.updateModel("UpdateCabDet", new Object[]{ ent });
                 result = new Object[]{(Boolean) true};
             }
             

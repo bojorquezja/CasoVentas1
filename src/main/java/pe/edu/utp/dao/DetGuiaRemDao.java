@@ -55,7 +55,7 @@ public class DetGuiaRemDao implements Dao<DetGuiaRem>{
 
     @Override
     public boolean insert(DetGuiaRem entidad) {
-        String sqlA = "INSERT DetGuiaRem (codGuiaRem, codigoProd, descrProd " +
+        String sqlA = "INSERT DetGuiaRem (codGuiaRem, codigoProd, descrProd, " +
                     "cantidad) "
                 + "VALUES (?,?,?, "
                 + "?) ";

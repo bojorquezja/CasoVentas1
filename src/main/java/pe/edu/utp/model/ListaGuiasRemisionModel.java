@@ -4,7 +4,6 @@ import java.util.List;
 import pe.edu.utp.dao.CabGuiaRemDao;
 import pe.edu.utp.dao.DetGuiaRemDao;
 import pe.edu.utp.entity.CabGuiaRem;
-import pe.edu.utp.entity.DetGuiaRem;
 
 public class ListaGuiasRemisionModel implements MVPModel{
 

@@ -2,10 +2,13 @@ package pe.edu.utp.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import java.awt.Dimension;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pe.edu.utp.entity.CabGuiaRem;
+import pe.edu.utp.entity.DetGuiaRem;
 import pe.edu.utp.presenter.MVPPresenter;
 
 public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
@@ -42,6 +45,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
             this.setTitle((String) params[0]);
             if (((String)params[1]).equals("READ")){
                 tfl0.setEditable(false);
+                dtp0.setEnabled(false);
                 tfl1.setEditable(false);
                 tfl2.setEditable(false);
                 tfl3.setEditable(false);
@@ -50,11 +54,11 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl6.setEditable(false);
                 tfl7.setEditable(false);
                 btn1.setVisible(false);
-                tbl1.setEnabled(false);
-                
+                tbl0.setEnabled(false);
             }
             if (((String)params[1]).equals("INSERT")){
                 tfl0.setEditable(true);
+                dtp0.setEnabled(true);
                 tfl1.setEditable(true);
                 tfl2.setEditable(true);
                 tfl3.setEditable(true);
@@ -63,10 +67,11 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl6.setEditable(true);
                 tfl7.setEditable(true);
                 btn1.setVisible(true);
-                tbl1.setEnabled(true);
+                tbl0.setEnabled(true);
             }
             if (((String)params[1]).equals("UPDATE")){
                 tfl0.setEditable(false);
+                dtp0.setEnabled(true);
                 tfl1.setEditable(true);
                 tfl2.setEditable(true);
                 tfl3.setEditable(true);
@@ -75,7 +80,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl6.setEditable(true);
                 tfl7.setEditable(true);
                 btn1.setVisible(true);
-                tbl1.setEnabled(true);
+                tbl0.setEnabled(true);
             }
         }
         if (subject.equalsIgnoreCase("DltBox")) {
@@ -94,7 +99,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         }
         if (subject.equalsIgnoreCase("Refrescar")) {
             //params[]: lista
-            DefaultTableModel tblModel = (DefaultTableModel) tbl1.getModel();
+            DefaultTableModel tblModel = (DefaultTableModel) tbl0.getModel();
             tblModel.setRowCount(0);
             List<CabGuiaRem> lista = (List<CabGuiaRem>) params[0];
             lista.stream().map((item) -> {
@@ -144,7 +149,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl1 = new javax.swing.JTable();
+        tbl0 = new javax.swing.JTable();
         dtp0 = new com.github.lgooddatepicker.components.DatePicker();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -185,7 +190,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
 
         jLabel9.setText("Bultos:");
 
-        tbl1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl0.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -193,7 +198,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 "Codigo Producto", "Descripcion Producto", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(tbl1);
+        jScrollPane1.setViewportView(tbl0);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Empresa"));
 
@@ -365,15 +370,54 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         //Aceptar
-        presenter.notifyPresenter("Seleccionar", new Object[]{tfl0.getText(), tfl1.getText()});
+        if (tbl0.isEditing()) {
+            tbl0.getCellEditor().stopCellEditing();
+        }
+        List<DetGuiaRem> dgr = new ArrayList<>();
+        for (int x=0 ; x < tbl0.getModel().getRowCount() ; x++){
+            if (((String) tbl0.getValueAt(x, 2)).isEmpty()){
+                tbl0.setValueAt("0", x, 2);
+            }
+            dgr.add(new DetGuiaRem(tfl0.getText(), 
+                    (String) tbl0.getValueAt(x, 0), 
+                    (String) tbl0.getValueAt(x, 1), 
+                    Integer.valueOf((String) tbl0.getValueAt(x, 2))  
+                )
+            );
+        }
+        if (tfl7.getText().isEmpty()){
+            tfl7.setText("0");
+        }
+        CabGuiaRem cgr = new CabGuiaRem(tfl0.getText(), 
+                dtp0.getDate(), 
+                tfl1.getText(), 
+                tfl2.getText(), 
+                tfl3.getText(), 
+                tfl4.getText(), 
+                tfl5.getText(), 
+                tfl6.getText(), 
+                Integer.valueOf(tfl7.getText()) 
+        );
+        cgr.setDetGuiaRem(dgr);
+        presenter.notifyPresenter("Aceptar", new Object[]{ cgr });
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
-        // TODO add your handling code here:
+        // +
+        DefaultTableModel dtm = (DefaultTableModel) tbl0.getModel();
+        dtm.setRowCount(dtm.getRowCount()+1);
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
-        // TODO add your handling code here:
+        // -
+        if (tbl0.getModel().getRowCount()>0){
+            if (tbl0.getSelectedRow() > 0){
+                DefaultTableModel dtm = (DefaultTableModel) tbl0.getModel();
+                dtm.removeRow(tbl0.getSelectedRow());
+            }else{
+                JOptionPane.showMessageDialog(null, "Seleccione una fila valida");
+            }
+        }
     }//GEN-LAST:event_btn11ActionPerformed
 
     
@@ -396,7 +440,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbl1;
+    private javax.swing.JTable tbl0;
     private javax.swing.JTextField tfl0;
     private javax.swing.JTextField tfl1;
     private javax.swing.JTextField tfl2;
