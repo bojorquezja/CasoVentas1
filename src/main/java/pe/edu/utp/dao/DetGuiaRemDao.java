@@ -14,7 +14,7 @@ public class DetGuiaRemDao implements Dao<DetGuiaRem>{
         Objects.requireNonNull(pks[1], "Codigo Producto no debe ser nulo");
         Class[] tipoObjeto = {String.class, String.class};
 
-        String sql = "SELECT codGuiaRem, codigoProd, descrProd " +
+        String sql = "SELECT codGuiaRem, codigoProd, descrProd, " +
                     "cantidad " +
                     "FROM DetGuiaRem " +
                     "WHERE codGuiaRem = ? AND codigoProd = ? ";
@@ -35,8 +35,8 @@ public class DetGuiaRemDao implements Dao<DetGuiaRem>{
     @Override
     public List<DetGuiaRem> getListOfEntities01(Object[] valores) {
         Objects.requireNonNull(valores[0], "Codigo Guia Remision no debe ser nulo");
-        Class[] tipoObjeto = {String.class, String.class};
-        String sql = "SELECT codGuiaRem, codigoProd, descrProd " +
+        Class[] tipoObjeto = {String.class};
+        String sql = "SELECT codGuiaRem, codigoProd, descrProd, " +
                     "cantidad " +
                     "FROM DetGuiaRem " +
                     "WHERE codGuiaRem = ? ";

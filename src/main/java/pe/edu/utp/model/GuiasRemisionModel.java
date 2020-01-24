@@ -40,9 +40,11 @@ public class GuiasRemisionModel implements MVPModel{
             String pk = (String) params[0];
             CabGuiaRemDao dao = new CabGuiaRemDao();
             CabGuiaRem ent = dao.getEntity(pk).orElse(null);
-            DetGuiaRemDao dao2 = new DetGuiaRemDao();
-            List<DetGuiaRem> lista1 = dao2.getListOfEntities01(new Object[]{pk});
-            ent.setDetGuiaRem(lista1);
+            if (ent != null){
+                DetGuiaRemDao dao2 = new DetGuiaRemDao();
+                List<DetGuiaRem> lista1 = dao2.getListOfEntities01(new Object[]{pk});
+                ent.setDetGuiaRem(lista1);
+            }
             return new Object[]{ent};
         }
         return null;

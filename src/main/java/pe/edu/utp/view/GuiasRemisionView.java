@@ -43,7 +43,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         if (subject.equalsIgnoreCase("Iniciar")) {
             this.setTitle((String) params[0]);
             if (((String)params[1]).equals("READ")){
-                CabGuiaRem ent = (CabGuiaRem) params[1];
+                CabGuiaRem ent = (CabGuiaRem) params[2];
                 tfl0.setEditable(false);
                 dtp0.setEnabled(false);
                 tfl1.setEditable(false);
@@ -79,7 +79,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tbl0.setEnabled(true);
             }
             if (((String)params[1]).equals("UPDATE")){
-                CabGuiaRem ent = (CabGuiaRem) params[1];
+                CabGuiaRem ent = (CabGuiaRem) params[2];
                 tfl0.setEditable(false);
                 dtp0.setEnabled(true);
                 tfl1.setEditable(true);
