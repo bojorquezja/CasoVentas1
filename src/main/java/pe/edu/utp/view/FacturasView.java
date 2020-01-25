@@ -5,13 +5,15 @@ import com.toddfast.util.convert.TypeConverter;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.DoubleAdder;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import pe.edu.utp.entity.CabGuiaRem;
-import pe.edu.utp.entity.DetGuiaRem;
+import javax.swing.table.TableModel;
+import pe.edu.utp.entity.CabFactura;
+import pe.edu.utp.entity.DetFactura;
 import pe.edu.utp.presenter.MVPPresenter;
 
-public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
+public class FacturasView extends javax.swing.JDialog implements MVPView {
     private MVPPresenter presenter;
 
     @Override
@@ -40,12 +42,13 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
     public Object[] updateView(String subject, Object[] params) {
         Object[] resultUpdateView = null;
         //params[]: Titulo, Tipo ventana(READ / INSE / UPDA / DELE), 
-        //          CabGuiaRem con Det
+        //          CabFactura con Det
         if (subject.equalsIgnoreCase("Iniciar")) {
             this.setTitle((String) params[0]);
             if (((String)params[1]).equals("READ")){
                 tfl0.setEditable(false);
                 dtp0.setEnabled(false);
+                tfl10.setEditable(false);
                 tfl1.setEditable(false);
                 tfl2.setEditable(false);
                 tfl3.setEditable(false);
@@ -53,6 +56,8 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl5.setEditable(false);
                 tfl6.setEditable(false);
                 tfl7.setEditable(false);
+                tfl8.setEditable(false);
+                tfl9.setEditable(false);
                 btn1.setVisible(false);
                 tbl0.setEnabled(false);
                 this.CargaDatos(new Object[]{params[2]});
@@ -60,26 +65,32 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
             if (((String)params[1]).equals("INSERT")){
                 tfl0.setEditable(true);
                 dtp0.setEnabled(true);
+                tfl10.setEditable(true);
                 tfl1.setEditable(true);
                 tfl2.setEditable(true);
                 tfl3.setEditable(true);
                 tfl4.setEditable(true);
                 tfl5.setEditable(true);
                 tfl6.setEditable(true);
-                tfl7.setEditable(true);
+                tfl7.setEditable(false);
+                tfl8.setEditable(false);
+                tfl9.setEditable(false);
                 btn1.setVisible(true);
                 tbl0.setEnabled(true);
             }
             if (((String)params[1]).equals("UPDATE")){
                 tfl0.setEditable(false);
                 dtp0.setEnabled(true);
+                tfl10.setEditable(true);
                 tfl1.setEditable(true);
                 tfl2.setEditable(true);
                 tfl3.setEditable(true);
                 tfl4.setEditable(true);
                 tfl5.setEditable(true);
                 tfl6.setEditable(true);
-                tfl7.setEditable(true);
+                tfl7.setEditable(false);
+                tfl8.setEditable(false);
+                tfl9.setEditable(false);
                 btn1.setVisible(true);
                 tbl0.setEnabled(true);
                 this.CargaDatos(new Object[]{params[2]});
@@ -103,25 +114,30 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
     }
 
     private void CargaDatos(Object[] params){
-        //params[]: CabGuiaRem con Det
-        CabGuiaRem ent = (CabGuiaRem) params[0];
-        tfl0.setText(ent.getCodGuiaRem());
+        //params[]: CabFactura con Det
+        CabFactura ent = (CabFactura) params[0];
+        tfl0.setText(ent.getCodigoFac());
         dtp0.setDate(ent.getFechaEmi());
+        tfl10.setText(ent.getCodGuiaRem());
         tfl1.setText(ent.getRucEmpresa());
         tfl2.setText(ent.getRazSocEmpresa());
         tfl3.setText(ent.getRucCliente());
         tfl4.setText(ent.getRazSocCliente());
         tfl5.setText(ent.getDirecCliente());
-        tfl6.setText(ent.getAlmacenero());
-        tfl7.setText(ent.getBultos().toString());
+        tfl6.setText(ent.getCajero());
+        tfl7.setText(ent.getSubTotal().toString());
+        tfl8.setText(ent.getIgv().toString());
+        tfl9.setText(ent.getTotal().toString());
         DefaultTableModel tblModel = (DefaultTableModel) tbl0.getModel();
         tblModel.setRowCount(0);
-        List<DetGuiaRem> lista =  ent.getDetGuiaRem();
+        List<DetFactura> lista =  ent.getDetFactura();
         lista.stream().map((item) -> {
-            Object[] objs = new Object[3];
+            Object[] objs = new Object[5];
             objs[0] = item.getCodigoProd();
             objs[1] = item.getDescrProd();
             objs[2] = item.getCantidad();
+            objs[3] = item.getPrecUnit();
+            objs[4] = item.getValorVenta();
             return objs;
         }).forEachOrdered((objs) -> {
             tblModel.addRow(objs);
@@ -129,7 +145,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
     }
     
     
-    public GuiasRemisionView(java.awt.Frame parent, boolean modal) {
+    public FacturasView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -138,6 +154,23 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 presenter.notifyPresenter("Cancelar", null);
             }
         });
+        //calcula suma
+        DoubleAdder adder = new DoubleAdder();
+        tbl0.getModel().addTableModelListener((e) -> {
+            TableModel tm = (TableModel) e.getSource();
+            for (int x=0 ; x < tm.getRowCount() ; x++){
+                Double val1; 
+                try{
+                    val1 = TypeConverter.convert(Double.class, tbl0.getValueAt(x, 4));
+                }catch(Exception f){
+                    val1 = 0.0;
+                }
+                adder.add(val1);
+            }
+        });
+        tfl7.setText(""+adder.sum());
+        tfl8.setText(""+(adder.sum()*0.18));
+        tfl9.setText(""+(adder.sum()*1.18));
         //corregir Lgooddatepicker
         DatePickerSettings dps = new DatePickerSettings();
         dps.setFormatForDatesCommonEra("dd/MM/yyyy");
@@ -176,10 +209,16 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         tfl5 = new javax.swing.JTextField();
         btn10 = new javax.swing.JButton();
         btn11 = new javax.swing.JButton();
+        tfl10 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        tfl8 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        tfl9 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Codigo GR:");
+        jLabel1.setText("Cod. Factura:");
 
         btn0.setText("Cancelar");
         btn0.addActionListener(new java.awt.event.ActionListener() {
@@ -197,16 +236,16 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
 
         jLabel3.setText("Fecha Emision:");
 
-        jLabel8.setText("Almacenero:");
+        jLabel8.setText("Cajero:");
 
-        jLabel9.setText("Bultos:");
+        jLabel9.setText("SubTotal S/");
 
         tbl0.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo Producto", "Descripcion Producto", "Cantidad"
+                "Codigo Producto", "Descripcion Producto", "Cantidad", "PU", "Valor Venta"
             }
         ));
         jScrollPane1.setViewportView(tbl0);
@@ -302,44 +341,71 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
             }
         });
 
+        jLabel10.setText("Guia Remision:");
+
+        jLabel11.setText("IGV S/");
+
+        jLabel12.setText("Total S/");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(26, 26, 26))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(29, 29, 29)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfl0, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(52, 52, 52)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(dtp0, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfl10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(3, 3, 3)))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btn1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn0))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btn10)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(69, 69, 69)
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tfl7, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(37, 37, 37)
-                            .addComponent(jLabel8)
-                            .addGap(147, 147, 147)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn0)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfl6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(26, 26, 26)
-                                .addComponent(tfl0, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dtp0, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGap(29, 29, 29))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addGap(22, 22, 22)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfl9, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfl8, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfl7, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,6 +416,10 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                     .addComponent(tfl0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(dtp0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(tfl10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -358,12 +428,20 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfl7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
                     .addComponent(tfl6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(btn10)
-                    .addComponent(btn11))
+                    .addComponent(btn11)
+                    .addComponent(tfl7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfl8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfl9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn0)
@@ -384,36 +462,55 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         if (tbl0.isEditing()) {
             tbl0.getCellEditor().stopCellEditing();
         }
-        List<DetGuiaRem> dgr = new ArrayList<>();
+        List<DetFactura> dgr = new ArrayList<>();
         for (int x=0 ; x < tbl0.getModel().getRowCount() ; x++){
-            Integer val;
+            Integer val1; 
             try{
-                val = TypeConverter.convert(Integer.class, tbl0.getValueAt(x, 2));
+                val1 = TypeConverter.convert(Integer.class, tbl0.getValueAt(x, 2));
             }catch(Exception e){
-                val = 0;
+                val1 = 0;
             }
-            dgr.add(new DetGuiaRem(tfl0.getText(), 
+            Double val2, val3;
+            try{
+                val2 = TypeConverter.convert(Double.class, tbl0.getValueAt(x, 3));
+            }catch(Exception e){
+                val2 = 0.0;
+            }
+            try{
+                val3 = TypeConverter.convert(Double.class, tbl0.getValueAt(x, 4));
+            }catch(Exception e){
+                val3 = 0.0;
+            }
+            dgr.add(new DetFactura(tfl0.getText(), 
                     (String) tbl0.getValueAt(x, 0), 
                     (String) tbl0.getValueAt(x, 1), 
-                    val
+                    val1,
+                    val2,
+                    val3
                 )
             );
         }
         if (tfl7.getText().isEmpty()){
             tfl7.setText("0");
         }
-        CabGuiaRem cgr = new CabGuiaRem(tfl0.getText(), 
+        
+        CabFactura cgr = new CabFactura(tfl0.getText(), 
                 dtp0.getDate(), 
+                tfl10.getText(),
                 tfl1.getText(), 
                 tfl2.getText(), 
                 tfl3.getText(), 
                 tfl4.getText(), 
                 tfl5.getText(), 
                 tfl6.getText(), 
-                Integer.valueOf(tfl7.getText()) 
+                Double.valueOf(tfl7.getText()),
+                Double.valueOf(tfl8.getText()),
+                Double.valueOf(tfl9.getText())
         );
-        cgr.setDetGuiaRem(dgr);
+
+        cgr.setDetFactura(dgr);
         presenter.notifyPresenter("Aceptar", new Object[]{ cgr });
+
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
@@ -442,6 +539,9 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
     private javax.swing.JButton btn11;
     private com.github.lgooddatepicker.components.DatePicker dtp0;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -456,11 +556,14 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
     private javax.swing.JTable tbl0;
     private javax.swing.JTextField tfl0;
     private javax.swing.JTextField tfl1;
+    private javax.swing.JTextField tfl10;
     private javax.swing.JTextField tfl2;
     private javax.swing.JTextField tfl3;
     private javax.swing.JTextField tfl4;
     private javax.swing.JTextField tfl5;
     private javax.swing.JTextField tfl6;
     private javax.swing.JTextField tfl7;
+    private javax.swing.JTextField tfl8;
+    private javax.swing.JTextField tfl9;
     // End of variables declaration//GEN-END:variables
 }
