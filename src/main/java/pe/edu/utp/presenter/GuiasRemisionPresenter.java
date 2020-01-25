@@ -1,6 +1,7 @@
 package pe.edu.utp.presenter;
 
 import pe.edu.utp.entity.CabGuiaRem;
+import pe.edu.utp.entity.DetGuiaRem;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.MVPView;
 
@@ -21,6 +22,12 @@ public class GuiasRemisionPresenter implements MVPPresenter{
         if ( this.tipoView.equalsIgnoreCase("READ") || this.tipoView.equalsIgnoreCase("UPDATE") ){
             ent = (CabGuiaRem) model.loadModel("CabDet", new Object[]{params[1]})[0];
         }
+        System.out.println("YYYYYY");
+        System.out.println(ent.toString());
+        System.out.println("ZZZZZZZ");
+                for (DetGuiaRem d : ent.getDetGuiaRem()){
+                    System.out.println(d.toString());
+                }
         view.updateView("Iniciar", new Object[]{"Guia de Remision", tipoView, ent});
         view.showView();
     }
@@ -47,11 +54,13 @@ public class GuiasRemisionPresenter implements MVPPresenter{
                 CabGuiaRem ent = (CabGuiaRem) params[0];
                 model.updateModel("InsertCabDet", new Object[]{ ent });
                 result = new Object[]{(Boolean) true};
+                view.closeView();
             }
             if (this.tipoView.equalsIgnoreCase("UPDATE")){
                 CabGuiaRem ent = (CabGuiaRem) params[0];
                 model.updateModel("UpdateCabDet", new Object[]{ ent });
                 result = new Object[]{(Boolean) true};
+                view.closeView();
             }
             
         }

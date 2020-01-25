@@ -84,6 +84,7 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
         if (subject.equalsIgnoreCase("Seleccionar")) {
             //params: codigo GR Selecionado
             result = new Object[]{params[0]};
+            view.closeView();
         }
     }
 

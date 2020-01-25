@@ -66,25 +66,30 @@ public class ListaGuiasRemisionView extends javax.swing.JDialog implements MVPVi
         }
         if (subject.equalsIgnoreCase("Refrescar")) {
             //params[]: lista
-            DefaultTableModel tblModel = (DefaultTableModel) tbl1.getModel();
-            tblModel.setRowCount(0);
-            List<CabGuiaRem> lista = (List<CabGuiaRem>) params[0];
-            lista.stream().map((item) -> {
-                Object[] objs = new Object[6];
-                objs[0] = item.getCodGuiaRem();
-                objs[1] = item.getRucEmpresa() + "-" + item.getRazSocEmpresa();
-                objs[2] = item.getRucCliente() + "-" + item.getRazSocCliente();
-                objs[3] = item.getFechaEmi();
-                objs[4] = item.getBultos();
-                objs[5] = item.getAlmacenero();
-                return objs;
-            }).forEachOrdered((objs) -> {
-                tblModel.addRow(objs);
-            });
+            this.CargaDatos(params);
         }
         return resultUpdateView;
     }
 
+    private void CargaDatos(Object[] params){
+        //params[]: lista
+        DefaultTableModel tblModel = (DefaultTableModel) tbl1.getModel();
+        tblModel.setRowCount(0);
+        List<CabGuiaRem> lista = (List<CabGuiaRem>) params[0];
+        lista.stream().map((item) -> {
+            Object[] objs = new Object[6];
+            objs[0] = item.getCodGuiaRem();
+            objs[1] = item.getRucEmpresa() + "-" + item.getRazSocEmpresa();
+            objs[2] = item.getRucCliente() + "-" + item.getRazSocCliente();
+            objs[3] = item.getFechaEmi();
+            objs[4] = item.getBultos();
+            objs[5] = item.getAlmacenero();
+            return objs;
+        }).forEachOrdered((objs) -> {
+            tblModel.addRow(objs);
+        });
+    }
+    
     public ListaGuiasRemisionView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();

@@ -92,7 +92,8 @@ public class CabGuiaRemDao implements Dao<CabGuiaRem>{
         
         Class[] tipoObjetoA = {LocalDate.class, String.class,
                             String.class, String.class, String.class, 
-                            String.class, String.class, Integer.class};
+                            String.class, String.class, Integer.class,
+                            String.class};
         Object[] valoresA = {entidad.getFechaEmi(), entidad.getRucEmpresa(), 
                             entidad.getRazSocEmpresa(), entidad.getRucCliente(), entidad.getRazSocCliente(),
                             entidad.getDirecCliente(), entidad.getAlmacenero(), entidad.getBultos(),

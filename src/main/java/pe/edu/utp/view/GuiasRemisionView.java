@@ -43,7 +43,6 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         if (subject.equalsIgnoreCase("Iniciar")) {
             this.setTitle((String) params[0]);
             if (((String)params[1]).equals("READ")){
-                CabGuiaRem ent = (CabGuiaRem) params[2];
                 tfl0.setEditable(false);
                 dtp0.setEnabled(false);
                 tfl1.setEditable(false);
@@ -55,15 +54,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl7.setEditable(false);
                 btn1.setVisible(false);
                 tbl0.setEnabled(false);
-                tfl0.setText(ent.getCodGuiaRem());
-                dtp0.setDate(ent.getFechaEmi());
-                tfl1.setText(ent.getRucEmpresa());
-                tfl2.setText(ent.getRazSocEmpresa());
-                tfl3.setText(ent.getRucCliente());
-                tfl4.setText(ent.getRazSocCliente());
-                tfl5.setText(ent.getDirecCliente());
-                tfl6.setText(ent.getAlmacenero());
-                tfl7.setText(ent.getBultos().toString());
+                this.CargaDatos(new Object[]{params[2]});
             }
             if (((String)params[1]).equals("INSERT")){
                 tfl0.setEditable(true);
@@ -79,7 +70,6 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tbl0.setEnabled(true);
             }
             if (((String)params[1]).equals("UPDATE")){
-                CabGuiaRem ent = (CabGuiaRem) params[2];
                 tfl0.setEditable(false);
                 dtp0.setEnabled(true);
                 tfl1.setEditable(true);
@@ -91,15 +81,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 tfl7.setEditable(true);
                 btn1.setVisible(true);
                 tbl0.setEnabled(true);
-                tfl0.setText(ent.getCodGuiaRem());
-                dtp0.setDate(ent.getFechaEmi());
-                tfl1.setText(ent.getRucEmpresa());
-                tfl2.setText(ent.getRazSocEmpresa());
-                tfl3.setText(ent.getRucCliente());
-                tfl4.setText(ent.getRazSocCliente());
-                tfl5.setText(ent.getDirecCliente());
-                tfl6.setText(ent.getAlmacenero());
-                tfl7.setText(ent.getBultos().toString());
+                this.CargaDatos(new Object[]{params[2]});
             }
         }
         if (subject.equalsIgnoreCase("DltBox")) {
@@ -116,27 +98,36 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
             //params[]: Mensaje
             JOptionPane.showMessageDialog(null, params[0]);
         }
-        if (subject.equalsIgnoreCase("Refrescar")) {
-            //params[]: lista
-            DefaultTableModel tblModel = (DefaultTableModel) tbl0.getModel();
-            tblModel.setRowCount(0);
-            List<CabGuiaRem> lista = (List<CabGuiaRem>) params[0];
-            lista.stream().map((item) -> {
-                Object[] objs = new Object[6];
-                objs[0] = item.getCodGuiaRem();
-                objs[1] = item.getRucEmpresa() + "-" + item.getRazSocEmpresa();
-                objs[2] = item.getRucCliente() + "-" + item.getRazSocCliente();
-                objs[3] = item.getFechaEmi();
-                objs[4] = item.getBultos();
-                objs[5] = item.getAlmacenero();
-                return objs;
-            }).forEachOrdered((objs) -> {
-                tblModel.addRow(objs);
-            });
-        }
         return resultUpdateView;
     }
 
+    private void CargaDatos(Object[] params){
+        //params[]: CabGuiaRem con Det
+        CabGuiaRem ent = (CabGuiaRem) params[0];
+        tfl0.setText(ent.getCodGuiaRem());
+        dtp0.setDate(ent.getFechaEmi());
+        tfl1.setText(ent.getRucEmpresa());
+        tfl2.setText(ent.getRazSocEmpresa());
+        tfl3.setText(ent.getRucCliente());
+        tfl4.setText(ent.getRazSocCliente());
+        tfl5.setText(ent.getDirecCliente());
+        tfl6.setText(ent.getAlmacenero());
+        tfl7.setText(ent.getBultos().toString());
+        DefaultTableModel tblModel = (DefaultTableModel) tbl0.getModel();
+        tblModel.setRowCount(0);
+        List<DetGuiaRem> lista =  ent.getDetGuiaRem();
+        lista.stream().map((item) -> {
+            Object[] objs = new Object[3];
+            objs[0] = item.getCodigoProd();
+            objs[1] = item.getDescrProd();
+            objs[2] = item.getCantidad();
+            return objs;
+        }).forEachOrdered((objs) -> {
+            tblModel.addRow(objs);
+        });
+    }
+    
+    
     public GuiasRemisionView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -394,13 +385,19 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         }
         List<DetGuiaRem> dgr = new ArrayList<>();
         for (int x=0 ; x < tbl0.getModel().getRowCount() ; x++){
-            if (((String) tbl0.getValueAt(x, 2)).isEmpty()){
-                tbl0.setValueAt("0", x, 2);
+            Integer val;
+            if (tbl0.getValueAt(x, 2) instanceof String){
+                if (((String) tbl0.getValueAt(x, 2)).isEmpty()){
+                    tbl0.setValueAt("0", x, 2);
+                }
+                val = Integer.valueOf((String) tbl0.getValueAt(x, 2));
+            }else{
+                val = (Integer) tbl0.getValueAt(x, 2);
             }
             dgr.add(new DetGuiaRem(tfl0.getText(), 
                     (String) tbl0.getValueAt(x, 0), 
                     (String) tbl0.getValueAt(x, 1), 
-                    Integer.valueOf((String) tbl0.getValueAt(x, 2))  
+                    val
                 )
             );
         }
@@ -439,7 +436,6 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
         }
     }//GEN-LAST:event_btn11ActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn0;
