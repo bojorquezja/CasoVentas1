@@ -64,7 +64,7 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_mei1ActionPerformed
 
     private void mei2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei2ActionPerformed
-        new ListaFacturasView(new javax.swing.JFrame(), true).setVisible(true);
+        new ListaFacturaView(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_mei2ActionPerformed
 
     public static void main(String args[]) {

@@ -7,13 +7,13 @@ import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.GuiasRemisionView;
 import pe.edu.utp.view.MVPView;
 
-public class ListaFacturasPresenter implements MVPPresenter{
+public class ListaFacturaPresenter implements MVPPresenter{
     private MVPView view;
     private MVPModel model;
     private Object[] result;
     private String tipoView;
 
-    public ListaFacturasPresenter(MVPView view, MVPModel model, Object[] params) {
+    public ListaFacturaPresenter(MVPView view, MVPModel model, Object[] params) {
         this.model = model;
         this.view = view;
         this.result = null;

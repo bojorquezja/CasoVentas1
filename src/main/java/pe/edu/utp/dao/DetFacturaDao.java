@@ -14,7 +14,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
         Objects.requireNonNull(pks[1], "Codigo Producto no debe ser nulo");
         Class[] tipoObjeto = {String.class, String.class};
 
-        String sql = "SELECT codigoFac, codigoProd, descrProd " +
+        String sql = "SELECT codigoFac, codigoProd, descrProd, " +
                     "cantidad, precUnit, valorVenta " +
                     "FROM DetFactura " +
                     "WHERE codigoFac = ? AND codigoProd = ? ";
@@ -35,8 +35,8 @@ public class DetFacturaDao implements Dao<DetFactura>{
     @Override
     public List<DetFactura> getListOfEntities01(Object[] valores) {
         Objects.requireNonNull(valores[0], "Codigo Factura no debe ser nulo");
-        Class[] tipoObjeto = {String.class, String.class};
-        String sql = "SELECT codigoFac, codigoProd, descrProd " +
+        Class[] tipoObjeto = {String.class};
+        String sql = "SELECT codigoFac, codigoProd, descrProd, " +
                     "cantidad, precUnit, valorVenta " +
                     "FROM DetFactura " +
                     "WHERE codigoFac = ? ";
@@ -55,7 +55,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
 
     @Override
     public boolean insert(DetFactura entidad) {
-        String sqlA = "INSERT DetFactura (codigoFac, codigoProd, descrProd " +
+        String sqlA = "INSERT DetFactura (codigoFac, codigoProd, descrProd, " +
                     "cantidad, precUnit, valorVenta) "
                 + "VALUES (?,?,?, "
                 + "?,?,?) ";
@@ -113,7 +113,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
     public boolean delete(Object pk) {
         Objects.requireNonNull(pk, "Codigo Factura no debe ser nulo");
         String sqlA = "DELETE FROM DetFactura "
-                + "WHERE codigoFac = ? AND codigoProd = ? ";
+                + "WHERE codigoFac = ? ";
         
         Class[] tipoObjetoA = {String.class};
         Object[] valoresA = {(String) pk};

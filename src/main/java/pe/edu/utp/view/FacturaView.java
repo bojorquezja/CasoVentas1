@@ -13,7 +13,7 @@ import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.entity.DetFactura;
 import pe.edu.utp.presenter.MVPPresenter;
 
-public class FacturasView extends javax.swing.JDialog implements MVPView {
+public class FacturaView extends javax.swing.JDialog implements MVPView {
     private MVPPresenter presenter;
 
     @Override
@@ -144,8 +144,22 @@ public class FacturasView extends javax.swing.JDialog implements MVPView {
         });
     }
     
+    private void sumaTotales(TableModel tm){
+        Double val1=0.0;
+        for (int x=0 ; x < tm.getRowCount() ; x++){
+
+            try{
+                val1 += TypeConverter.convert(Double.class, tbl0.getValueAt(x, 4));
+            }catch(Exception f){
+                val1 += 0.0;
+            }
+        }
+        tfl7.setText(""+val1);
+        tfl8.setText(""+(val1*0.18));
+        tfl9.setText(""+(val1*1.18));
+    }
     
-    public FacturasView(java.awt.Frame parent, boolean modal) {
+    public FacturaView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -155,22 +169,11 @@ public class FacturasView extends javax.swing.JDialog implements MVPView {
             }
         });
         //calcula suma
-        DoubleAdder adder = new DoubleAdder();
         tbl0.getModel().addTableModelListener((e) -> {
             TableModel tm = (TableModel) e.getSource();
-            for (int x=0 ; x < tm.getRowCount() ; x++){
-                Double val1; 
-                try{
-                    val1 = TypeConverter.convert(Double.class, tbl0.getValueAt(x, 4));
-                }catch(Exception f){
-                    val1 = 0.0;
-                }
-                adder.add(val1);
-            }
+            this.sumaTotales(tm);
         });
-        tfl7.setText(""+adder.sum());
-        tfl8.setText(""+(adder.sum()*0.18));
-        tfl9.setText(""+(adder.sum()*1.18));
+        
         //corregir Lgooddatepicker
         DatePickerSettings dps = new DatePickerSettings();
         dps.setFormatForDatesCommonEra("dd/MM/yyyy");

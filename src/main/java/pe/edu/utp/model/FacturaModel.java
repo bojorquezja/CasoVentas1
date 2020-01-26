@@ -6,7 +6,7 @@ import pe.edu.utp.dao.DetFacturaDao;
 import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.entity.DetFactura;
 
-public class FacturasModel implements MVPModel{
+public class FacturaModel implements MVPModel{
 
     @Override
     public void updateModel(String subject, Object[] params) {

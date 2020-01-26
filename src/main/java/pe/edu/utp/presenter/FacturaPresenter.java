@@ -5,14 +5,14 @@ import pe.edu.utp.entity.DetFactura;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.MVPView;
 
-public class FacturasPresenter implements MVPPresenter{
+public class FacturaPresenter implements MVPPresenter{
     private MVPView view;
     private MVPModel model;
     private Object[] result;
     private String tipoView;
 
-    public FacturasPresenter(MVPView view, MVPModel model, Object[] params) {
-        //tipoview, pk CabGR
+    public FacturaPresenter(MVPView view, MVPModel model, Object[] params) {
+        //tipoview, pk CabFactura
         this.model = model;
         this.view = view;
         this.result = new Object[]{(Boolean) true};
