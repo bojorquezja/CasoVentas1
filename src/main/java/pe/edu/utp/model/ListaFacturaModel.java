@@ -22,6 +22,7 @@ public class ListaFacturaModel implements MVPModel{
     @Override
     public Object[] loadModel(String subject, Object[] params) {
         if (subject.equalsIgnoreCase("Listar1")) {
+            //params: codigo FAC, cliente
             CabFacturaDao dao = new CabFacturaDao();
             List<CabFactura> lista1 = dao.getListOfEntities01(params);
             return new Object[]{lista1};

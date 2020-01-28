@@ -3,13 +3,18 @@ package pe.edu.utp;
 import javax.swing.SwingUtilities;
 import pe.edu.utp.model.FacturaModel;
 import pe.edu.utp.model.GuiasRemisionModel;
+import pe.edu.utp.model.ListaFacturaModel;
 import pe.edu.utp.model.ListaGuiasRemisionModel;
+import pe.edu.utp.model.PrincipalModel;
 import pe.edu.utp.presenter.FacturaPresenter;
 import pe.edu.utp.presenter.MVPPresenter;
 import pe.edu.utp.presenter.GuiasRemisionPresenter;
+import pe.edu.utp.presenter.ListaFacturaPresenter;
 import pe.edu.utp.presenter.ListaGuiasRemisionPresenter;
+import pe.edu.utp.presenter.PrincipalPresenter;
 import pe.edu.utp.view.FacturaView;
 import pe.edu.utp.view.GuiasRemisionView;
+import pe.edu.utp.view.ListaFacturaView;
 import pe.edu.utp.view.ListaGuiasRemisionView;
 import pe.edu.utp.view.PrincipalView;
 
@@ -31,22 +36,14 @@ public class App{
             java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-/*
-        SwingUtilities.invokeLater(() -> {
-            MVPPresenter p = new ListaGuiasRemisionPresenter(
-                    new ListaGuiasRemisionView(null, true), 
-                    new ListaGuiasRemisionModel(), 
-                    new Object[]{"MAINTENANCE"});
-            System.out.println(p.getResult()[0]);   //prueba
-        });
-        */
+
 
         SwingUtilities.invokeLater(() -> {
-            MVPPresenter p = new FacturaPresenter(
-                    new FacturaView(null, true), 
-                    new FacturaModel(), 
-                    new Object[]{"UPDATE", "F01004"});
-            System.out.println(p.getResult()[0]);   //prueba
+            MVPPresenter p = new PrincipalPresenter(
+                    new PrincipalView(), 
+                    new PrincipalModel(), 
+                    new Object[]{""});
+            //System.out.println(p.getResult()[0]);   //prueba
         });
 
     }

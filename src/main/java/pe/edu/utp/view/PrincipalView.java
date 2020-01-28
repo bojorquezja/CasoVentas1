@@ -1,7 +1,40 @@
 package pe.edu.utp.view;
 
-public class PrincipalView extends javax.swing.JFrame {
+import pe.edu.utp.presenter.MVPPresenter;
 
+public class PrincipalView extends javax.swing.JFrame implements MVPView{
+    private MVPPresenter presenter;
+    
+    @Override
+    public void showView() {
+        setVisible(true);
+    }
+
+    @Override
+    public void hideView() {
+        setVisible(false);
+    }
+
+    @Override
+    public void closeView() {
+        dispose();
+    }
+    
+    @Override
+    public void setPresenter(MVPPresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public Object[] updateView(String subject, Object[] params) {
+        Object[] resultUpdateView = null;
+        if (subject.equalsIgnoreCase("Iniciar")) {
+            //params[]: Titulo
+            this.setTitle((String) params[0]);
+        }
+        return resultUpdateView;
+    }
+    
     public PrincipalView() {
         initComponents();
     }
@@ -23,6 +56,11 @@ public class PrincipalView extends javax.swing.JFrame {
         setTitle("Sistema de Ventas");
 
         meb1.setText("Ventas");
+        meb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meb1ActionPerformed(evt);
+            }
+        });
 
         mei1.setText("Guia Remision");
         mei1.addActionListener(new java.awt.event.ActionListener() {
@@ -59,13 +97,16 @@ public class PrincipalView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mei1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei1ActionPerformed
-        ListaGuiasRemisionView dialog = new ListaGuiasRemisionView(new javax.swing.JFrame(), true);
-        dialog.setVisible(true);
+        presenter.notifyPresenter("Menu", new Object[]{"MantFactura"});
     }//GEN-LAST:event_mei1ActionPerformed
 
     private void mei2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei2ActionPerformed
-        new ListaFacturaView(new javax.swing.JFrame(), true).setVisible(true);
+        presenter.notifyPresenter("Menu", new Object[]{"MantGuiaRemision"});
     }//GEN-LAST:event_mei2ActionPerformed
+
+    private void meb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meb1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_meb1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -109,4 +150,6 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem mei1;
     private javax.swing.JMenuItem mei2;
     // End of variables declaration//GEN-END:variables
+
+    
 }

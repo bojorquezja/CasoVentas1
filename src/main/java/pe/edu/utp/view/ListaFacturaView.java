@@ -1,9 +1,10 @@
 package pe.edu.utp.view;
 
 import java.util.List;
+import java.util.concurrent.atomic.DoubleAdder;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import pe.edu.utp.entity.CabGuiaRem;
+import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.presenter.MVPPresenter;
 
 public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
@@ -75,19 +76,23 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
         //params[]: lista
         DefaultTableModel tblModel = (DefaultTableModel) tbl1.getModel();
         tblModel.setRowCount(0);
-        List<CabGuiaRem> lista = (List<CabGuiaRem>) params[0];
+        List<CabFactura> lista = (List<CabFactura>) params[0];
+        DoubleAdder da = new DoubleAdder();
         lista.stream().map((item) -> {
-            Object[] objs = new Object[6];
-            objs[0] = item.getCodGuiaRem();
+            Object[] objs = new Object[7];
+            objs[0] = item.getCodigoFac();
             objs[1] = item.getRucEmpresa() + "-" + item.getRazSocEmpresa();
             objs[2] = item.getRucCliente() + "-" + item.getRazSocCliente();
-            objs[3] = item.getFechaEmi();
-            objs[4] = item.getBultos();
-            objs[5] = item.getAlmacenero();
+            objs[3] = item.getCodGuiaRem();
+            objs[4] = item.getFechaEmi();
+            objs[5] = item.getTotal();
+            objs[6] = item.getCajero();
+            da.add(item.getTotal());
             return objs;
         }).forEachOrdered((objs) -> {
             tblModel.addRow(objs);
         });
+        tfl2.setText("" + da.sum());
     }
     
     public ListaFacturaView(java.awt.Frame parent, boolean modal) {
@@ -134,11 +139,11 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
 
             },
             new String [] {
-                "Codigo GR", "Empresa", "Cliente", "Fecha", "Bultos", "Almacenero"
+                "Codigo FAC", "Empresa", "Cliente", "Guia", "Fecha", "Total", "Cajero"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -147,7 +152,7 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
         });
         jScrollPane1.setViewportView(tbl1);
 
-        jLabel1.setText("Codigo GR:");
+        jLabel1.setText("Codigo FAC:");
 
         jLabel2.setText("Cliente:");
 
@@ -188,7 +193,7 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
 
         tfl2.setEditable(false);
 
-        jLabel3.setText("Total Bultos:");
+        jLabel3.setText("Suma Total S/:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

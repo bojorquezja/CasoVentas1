@@ -8,9 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import pe.edu.utp.dao.CabFacturaDao;
 import pe.edu.utp.dao.Dao;
 import pe.edu.utp.entity.CabFactura;
+import pe.edu.utp.model.ListaFacturaModel;
+import pe.edu.utp.presenter.ListaFacturaPresenter;
+import pe.edu.utp.presenter.MVPPresenter;
+import pe.edu.utp.view.ListaFacturaView;
 
 public class FacturaTest {
     static final String DB_URL = "jdbc:mysql://localhost:3306/ventas1?useLegacyDatetimeCode=false&serverTimezone=America/Lima";
@@ -31,6 +36,25 @@ public class FacturaTest {
         System.out.println(lcf);
         lcf = cf.getListOfEntities01(new Object[]{"01", "te 1"});
         System.out.println(lcf);
+        
+        /*
+        SwingUtilities.invokeLater(() -> {
+            MVPPresenter p = new ListaFacturaPresenter(
+                    new ListaFacturaView(null, true), 
+                    new ListaFacturaModel(), 
+                    new Object[]{"UPDATE", "F01004"});
+            System.out.println(p.getResult()[0]);   //prueba
+        });
+        
+
+        SwingUtilities.invokeLater(() -> {
+            MVPPresenter p = new ListaFacturaPresenter(
+                    new ListaFacturaView(null, true), 
+                    new ListaFacturaModel(), 
+                    new Object[]{"MAINTENANCE"});
+            System.out.println(p.getResult()[0]);   //prueba
+        });
+*/
     }
     
     public static void selectFactura(){

@@ -22,12 +22,6 @@ public class GuiasRemisionPresenter implements MVPPresenter{
         if ( this.tipoView.equalsIgnoreCase("READ") || this.tipoView.equalsIgnoreCase("UPDATE") ){
             ent = (CabGuiaRem) model.loadModel("CabDet", new Object[]{params[1]})[0];
         }
-        System.out.println("YYYYYY");
-        System.out.println(ent.toString());
-        System.out.println("ZZZZZZZ");
-                for (DetGuiaRem d : ent.getDetGuiaRem()){
-                    System.out.println(d.toString());
-                }
         view.updateView("Iniciar", new Object[]{"Guia de Remision", tipoView, ent});
         view.showView();
     }

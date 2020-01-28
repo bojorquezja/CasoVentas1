@@ -115,13 +115,14 @@
         <Component class="javax.swing.JTable" name="tbl1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="0">
-                <Column editable="false" title="Codigo GR" type="java.lang.Object"/>
+              <Table columnCount="7" rowCount="0">
+                <Column editable="false" title="Codigo FAC" type="java.lang.Object"/>
                 <Column editable="false" title="Empresa" type="java.lang.Object"/>
                 <Column editable="false" title="Cliente" type="java.lang.Object"/>
+                <Column editable="false" title="Guia" type="java.lang.Object"/>
                 <Column editable="false" title="Fecha" type="java.lang.Object"/>
-                <Column editable="false" title="Bultos" type="java.lang.Object"/>
-                <Column editable="false" title="Almacenero" type="java.lang.Object"/>
+                <Column editable="false" title="Total" type="java.lang.Object"/>
+                <Column editable="false" title="Cajero" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -167,7 +168,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Codigo GR:"/>
+        <Property name="text" type="java.lang.String" value="Codigo FAC:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfl0">
@@ -226,7 +227,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Total Bultos:"/>
+        <Property name="text" type="java.lang.String" value="Suma Total S/:"/>
       </Properties>
     </Component>
   </SubComponents>

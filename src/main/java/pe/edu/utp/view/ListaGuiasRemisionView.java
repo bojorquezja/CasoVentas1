@@ -1,6 +1,7 @@
 package pe.edu.utp.view;
 
 import java.util.List;
+import java.util.concurrent.atomic.DoubleAdder;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pe.edu.utp.entity.CabGuiaRem;
@@ -34,8 +35,8 @@ public class ListaGuiasRemisionView extends javax.swing.JDialog implements MVPVi
     @Override
     public Object[] updateView(String subject, Object[] params) {
         Object[] resultUpdateView = null;
-        //params[]: Titulo, Tipo ventana(SELE / MAIN)
         if (subject.equalsIgnoreCase("Iniciar")) {
+            //params[]: Titulo, Tipo ventana(SELE / MAIN)
             this.setTitle((String) params[0]);
             if (((String)params[1]).equalsIgnoreCase("SELECT")){
                 btn1.setVisible(false);
@@ -76,6 +77,7 @@ public class ListaGuiasRemisionView extends javax.swing.JDialog implements MVPVi
         DefaultTableModel tblModel = (DefaultTableModel) tbl1.getModel();
         tblModel.setRowCount(0);
         List<CabGuiaRem> lista = (List<CabGuiaRem>) params[0];
+        DoubleAdder da = new DoubleAdder();
         lista.stream().map((item) -> {
             Object[] objs = new Object[6];
             objs[0] = item.getCodGuiaRem();
@@ -84,10 +86,12 @@ public class ListaGuiasRemisionView extends javax.swing.JDialog implements MVPVi
             objs[3] = item.getFechaEmi();
             objs[4] = item.getBultos();
             objs[5] = item.getAlmacenero();
+            da.add(item.getBultos());
             return objs;
         }).forEachOrdered((objs) -> {
             tblModel.addRow(objs);
         });
+        tfl2.setText("" + da.sum());
     }
     
     public ListaGuiasRemisionView(java.awt.Frame parent, boolean modal) {

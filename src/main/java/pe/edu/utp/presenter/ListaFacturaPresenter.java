@@ -2,9 +2,9 @@ package pe.edu.utp.presenter;
 
 import javax.swing.SwingUtilities;
 import pe.edu.utp.entity.CabFactura;
-import pe.edu.utp.model.GuiasRemisionModel;
+import pe.edu.utp.model.FacturaModel;
 import pe.edu.utp.model.MVPModel;
-import pe.edu.utp.view.GuiasRemisionView;
+import pe.edu.utp.view.FacturaView;
 import pe.edu.utp.view.MVPView;
 
 public class ListaFacturaPresenter implements MVPPresenter{
@@ -41,16 +41,16 @@ public class ListaFacturaPresenter implements MVPPresenter{
             view.closeView();
         }
         if (subject.equalsIgnoreCase("Buscar")) {
-            //params: codigo GR, cliente
+            //params: codigo FAC, cliente
             Object[] listObj = model.loadModel("Listar1", params);
             view.updateView("Refrescar", new Object[]{listObj[0]});
         }
         if (subject.equalsIgnoreCase("Agregar")) {
-            //params: codigo GR, cliente
+            //params: codigo FAC, cliente
             SwingUtilities.invokeLater(() -> {
-                MVPPresenter p = new GuiasRemisionPresenter(
-                        new GuiasRemisionView(null, true), 
-                        new GuiasRemisionModel(), 
+                MVPPresenter p = new FacturaPresenter(
+                        new FacturaView(null, true), 
+                        new FacturaModel(), 
                         new Object[]{"INSERT"});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
@@ -60,11 +60,11 @@ public class ListaFacturaPresenter implements MVPPresenter{
             });
         }
         if (subject.equalsIgnoreCase("Editar")) {
-            //params: codigo GR, cliente, codigo GR Editar
+            //params: codigo FAC, cliente, codigo FAC Editar
             SwingUtilities.invokeLater(() -> {
-                MVPPresenter p = new GuiasRemisionPresenter(
-                        new GuiasRemisionView(null, true), 
-                        new GuiasRemisionModel(), 
+                MVPPresenter p = new FacturaPresenter(
+                        new FacturaView(null, true), 
+                        new FacturaModel(), 
                         new Object[]{"UPDATE", params[2]});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
@@ -74,7 +74,7 @@ public class ListaFacturaPresenter implements MVPPresenter{
             });
         }
         if (subject.equalsIgnoreCase("Borrar")) {
-            //params: codigo GR, cliente, codigo GR Borrar
+            //params: codigo FAC, cliente, codigo FAC Borrar
             if ( (Boolean) view.updateView("DltBox", new Object[]{""})[0] ){
                 model.updateModel("DeleteCabDet", new Object[]{params[2]});
                 Object[] listObj = model.loadModel("Listar1", params);
