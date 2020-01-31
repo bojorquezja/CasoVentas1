@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class UtilitarioBD {
+public class UtilDataBase {
     private static final String CONNJDBC = getJDBCConnection();
     private static final String USER = getJDBCUser();
     private static final char[] PASS = getJDBCPassword();
@@ -115,64 +115,29 @@ public class UtilitarioBD {
         }
     }
     public static String getJDBCConnection() {
-        try (InputStream input = UtilitarioBD.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                resetJDBCConfiguration();
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        String[] propiedades = {"JDBC.Server", "JDBC.Port", "JDBC.DataBase",
+                            "JDBC.Parameters"
+                            };
+        String[] valores = UtilConfiguration.getArray(propiedades);
+        if (valores == null){
+            return null;
+        }else{
+            return "jdbc:mysql://" + valores[0] + ":"+
+                valores[1] + "/" +
+                valores[2] +
+                (valores[3].isEmpty() ? "" : "?" + valores[3]);
         }
-        try (InputStream input = UtilitarioBD.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties prop = new Properties();
-            //load a properties file from class path, inside static method
-            prop.load(input);
-            return "jdbc:mysql://" + prop.getProperty("JDBC.Server") + ":"+
-                    prop.getProperty("JDBC.Port") + "/" +
-                    prop.getProperty("JDBC.DataBase") +
-                    (prop.getProperty("JDBC.Parameters").isEmpty() ? "" : "?" + prop.getProperty("JDBC.Parameters"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
     public static String getJDBCUser() {
-        try (InputStream input = UtilitarioBD.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                resetJDBCConfiguration();
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        try (InputStream input = UtilitarioBD.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties prop = new Properties();
-            //load a properties file from class path, inside static method
-            prop.load(input);
-            return prop.getProperty("JDBC.User");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+        return UtilConfiguration.get("JDBC.User");
     }
     public static char[] getJDBCPassword() {
-        try (InputStream input = UtilitarioBD.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                resetJDBCConfiguration();
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        try (InputStream input = UtilitarioBD.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties prop = new Properties();
-            //load a properties file from class path, inside static method
-            prop.load(input);
-            return prop.getProperty("JDBC.Password").toCharArray();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+        String res = UtilConfiguration.get("JDBC.Password");
+        return (res == null ? null : res.toCharArray());
     }
+    //retirar
     public static void setJDBCConfiguration(String server, String port, String dataBase, String parameters, String user, char[] password) {
-        try (OutputStream output = Files.newOutputStream(Paths.get(UtilitarioBD.class.getClassLoader().getResource("config.properties").toURI()))) {
+        try (OutputStream output = Files.newOutputStream(Paths.get(UtilDataBase.class.getClassLoader().getResource("config.properties").toURI()))) {
             Properties prop = new Properties();
             // set the properties value
             prop.setProperty("JDBC.Server", server);
@@ -187,8 +152,9 @@ public class UtilitarioBD {
             io.printStackTrace();
         }
     }
+    //retirar
     public static void resetJDBCConfiguration() {
-        try (OutputStream output = Files.newOutputStream(Paths.get(UtilitarioBD.class.getClassLoader().getResource("config.properties").toURI()))) {
+        try (OutputStream output = Files.newOutputStream(Paths.get(UtilDataBase.class.getClassLoader().getResource("config.properties").toURI()))) {
             Properties prop = new Properties();
             // set the properties value
             prop.setProperty("JDBC.Server", "localhost");

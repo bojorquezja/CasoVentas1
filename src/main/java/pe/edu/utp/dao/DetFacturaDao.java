@@ -19,7 +19,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
                     "FROM DetFactura " +
                     "WHERE codigoFac = ? AND codigoProd = ? ";
         Object[] valores = {(String) pks[0], (String) pks[1]};
-        List<DetFactura> tlista = UtilitarioBD.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
+        List<DetFactura> tlista = UtilDataBase.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
             try{
                 DetFactura cb = new DetFactura(u.getString(1), u.getString(2), u.getString(3),
                         u.getInt(4), u.getDouble(5), u.getDouble(6));
@@ -40,7 +40,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
                     "cantidad, precUnit, valorVenta " +
                     "FROM DetFactura " +
                     "WHERE codigoFac = ? ";
-        List<DetFactura> tlista = UtilitarioBD.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
+        List<DetFactura> tlista = UtilDataBase.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
             try{
                 DetFactura cb = new DetFactura(u.getString(1), u.getString(2), u.getString(3),
                         u.getInt(4), u.getDouble(5), u.getDouble(6));
@@ -69,7 +69,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
         
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
         
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
         String[] sql = {sqlA};
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
     
     @Override
@@ -121,7 +121,7 @@ public class DetFacturaDao implements Dao<DetFactura>{
         String[] sql = {sqlA};
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
     
 }

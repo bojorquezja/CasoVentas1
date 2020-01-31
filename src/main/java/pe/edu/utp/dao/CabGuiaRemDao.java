@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import static pe.edu.utp.dao.UtilitarioBD.toLocalDate;
+import static pe.edu.utp.dao.UtilDataBase.toLocalDate;
 import pe.edu.utp.entity.CabGuiaRem;
 
 public class CabGuiaRemDao implements Dao<CabGuiaRem>{
@@ -20,7 +20,7 @@ public class CabGuiaRemDao implements Dao<CabGuiaRem>{
                     "FROM CabGuiaRem " +
                     "WHERE codGuiaRem = ?";
         Object[] valores = {(String) pk};
-        List<CabGuiaRem> tlista = UtilitarioBD.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
+        List<CabGuiaRem> tlista = UtilDataBase.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
             try{
                 CabGuiaRem cb = new CabGuiaRem(u.getString(1), toLocalDate(u.getDate(2)), u.getString(3), 
                         u.getString(4), u.getString(5), u.getString(6), u.getString(7), 
@@ -45,7 +45,7 @@ public class CabGuiaRemDao implements Dao<CabGuiaRem>{
                     "WHERE codGuiaRem like ? AND razSocCliente like ?";
         valores[0] = "%"+valores[0]+"%";
         valores[1] = "%"+valores[1]+"%";
-        List<CabGuiaRem> tlista = UtilitarioBD.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
+        List<CabGuiaRem> tlista = UtilDataBase.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
             try{
                 CabGuiaRem cb = new CabGuiaRem(u.getString(1), toLocalDate(u.getDate(2)), u.getString(3), 
                         u.getString(4), u.getString(5), u.getString(6), u.getString(7), 
@@ -79,7 +79,7 @@ public class CabGuiaRemDao implements Dao<CabGuiaRem>{
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
         
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class CabGuiaRemDao implements Dao<CabGuiaRem>{
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
         
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class CabGuiaRemDao implements Dao<CabGuiaRem>{
         String[] sql = {sqlA};
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
-        return UtilitarioBD.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
     
 }

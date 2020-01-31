@@ -19,6 +19,7 @@ public class ConfiguracionPresenter implements MVPPresenter{
         this.tipoView = (((String) params[0]).length()>=0) ? (String) params[0] : "READ";
         view.setPresenter(this);
         CabGuiaRem ent=null;
+        //TODO
         if ( this.tipoView.equalsIgnoreCase("READ") || this.tipoView.equalsIgnoreCase("UPDATE") ){
             ent = (CabGuiaRem) model.loadModel("CabDet", new Object[]{params[1]})[0];
         }
@@ -41,7 +42,7 @@ public class ConfiguracionPresenter implements MVPPresenter{
         if (subject.equalsIgnoreCase("Cancelar")) {
             view.closeView();
         }
-        
+        //TODO
         if (subject.equalsIgnoreCase("Aceptar")) {
             //params: CabGuiaRem con Det
             if (this.tipoView.equalsIgnoreCase("INSERT")){
@@ -58,7 +59,13 @@ public class ConfiguracionPresenter implements MVPPresenter{
             }
             
         }
-        
+        //TODO Reset y CambioConexion en textfield
+        if (subject.equalsIgnoreCase("Reset")) {
+            view.closeView();
+        }
+        if (subject.equalsIgnoreCase("CambioConexion")) {
+            view.closeView();
+        }
     }
 
     @Override
