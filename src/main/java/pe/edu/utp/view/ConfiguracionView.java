@@ -134,9 +134,27 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
 
         jLabel5.setText("Puerto:");
 
+        tfl1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tfl1PropertyChange(evt);
+            }
+        });
+
         jLabel7.setText("Parametros:");
 
+        tfl3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tfl3PropertyChange(evt);
+            }
+        });
+
         jLabel8.setText("Nombre BD:");
+
+        tfl2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tfl2PropertyChange(evt);
+            }
+        });
 
         jLabel9.setText("Usuario:");
 
@@ -270,12 +288,27 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void tfl0PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl0PropertyChange
+        enviaUpdateConexion();
+    }//GEN-LAST:event_tfl0PropertyChange
+
+    private void tfl1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl1PropertyChange
+        enviaUpdateConexion();
+    }//GEN-LAST:event_tfl1PropertyChange
+
+    private void tfl2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl2PropertyChange
+        enviaUpdateConexion();
+    }//GEN-LAST:event_tfl2PropertyChange
+
+    private void tfl3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl3PropertyChange
+        enviaUpdateConexion();
+    }//GEN-LAST:event_tfl3PropertyChange
+
+    private void enviaUpdateConexion(){
         String[] valores = {tfl0.getText(), tfl1.getText(), tfl2.getText(), 
                 tfl3.getText(), tfl5.getText()
                 };
         presenter.notifyPresenter("CambioConexion", valores);
-    }//GEN-LAST:event_tfl0PropertyChange
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn0;
