@@ -1,5 +1,6 @@
 package pe.edu.utp.dao;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,22 +11,17 @@ import java.util.Properties;
 
 public class UtilConfiguration {
     public static String get(String propiedad){
-        inicializa();
-        try (InputStream input = UtilDataBase.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties prop = new Properties();
-            //load a properties file from class path, inside static method
-            prop.load(input);
-            return prop.getProperty(propiedad);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+        String[] res = getArray(new String[]{propiedad});
+        return (res == null ? null : res[0]);
     }
     public static String[] getArray(String[] propiedades){
-        inicializa();
+        if (Files.exists(Paths.get("config.properties"))) {
+            reset();
+        }
         String[] res = new String[propiedades.length];
-        try (InputStream input = UtilDataBase.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties prop = new Properties();
+        Properties prop = new Properties();
+        try (InputStream input = Files.newInputStream(Paths.get("config.properties"))) {
+            
             //load a properties file from class path, inside static method
             prop.load(input);
             for(int x=0 ; x<propiedades.length ; x++){
@@ -38,43 +34,35 @@ public class UtilConfiguration {
         return null;
     }
     public static void set(String propiedad, String valor){
-        try (OutputStream output = Files.newOutputStream(Paths.get(UtilDataBase.class.getClassLoader().getResource("config.properties").toURI()))) {
-            Properties prop = new Properties();
-            // set the properties value
-            prop.setProperty(propiedad, valor);
-            prop.store(output, null);
-        } catch (IOException | URISyntaxException io) {
-            io.printStackTrace();
-        }
+        setArray(new String[]{propiedad}, new String[]{valor});
     }
     public static void setArray(String[] propiedades, String[] valores){
-        try (OutputStream output = Files.newOutputStream(Paths.get(UtilDataBase.class.getClassLoader().getResource("config.properties").toURI()))) {
-            Properties prop = new Properties();
+        Properties prop = new Properties();
+        try (OutputStream output = Files.newOutputStream(Paths.get("config.properties"))) {
             // set the properties value
             for(int x=0 ; x<propiedades.length ; x++){
                 prop.setProperty(propiedades[x], valores[x]);
             }
             prop.store(output, null);
-        } catch (IOException | URISyntaxException io) {
+        } catch (IOException io) {
             io.printStackTrace();
         }
     }
-    private static void inicializa(){
+    public static void reset(){
+        Properties prop=new Properties();
         try (InputStream input = UtilDataBase.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                reset();
-            }
+            //load a properties file from class path, inside static method
+            prop.load(input);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-    public static void reset(){
-        String[] propiedad = {"JDBC.Server", "JDBC.Port", "JDBC.DataBase",
-                            "JDBC.Parameters", "JDBC.User", "JDBC.Password"
-                            };
-        String[] valor = {"localhost", "3306", "ventas1", 
-                        "useLegacyDatetimeCode=false&serverTimezone=America/Lima", "root", ""
-                        };
-        setArray(propiedad, valor);
+        
+        Properties prop2 = new Properties(prop);
+        try (OutputStream output = Files.newOutputStream(Paths.get("config.properties"))) {
+            // set the properties value
+            prop2.store(output, null);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 }

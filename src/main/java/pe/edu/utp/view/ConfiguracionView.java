@@ -37,6 +37,10 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
             String[] valores = (String[]) params[1];
             this.CargaDatos(valores);
         }
+        if (subject.equalsIgnoreCase("Reset")) {
+            //params[]: String[] 
+            this.CargaDatos(params);
+        }
         if (subject.equalsIgnoreCase("CambioConexion")) {
             //params[]: String conex
             String val = (String) params[0];
@@ -66,9 +70,10 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
         tfl1.setText(val[1]);
         tfl2.setText(val[2]);
         tfl3.setText(val[3]);
-        tfl4.setText(val[4]);
-        pfl0.setText(val[5]);
-        tfl5.setText(val[6]);
+        tfl5.setText(val[4]);
+        tfl4.setText(val[5]);
+        pfl0.setText(val[6]);
+        
     }
     
     
@@ -276,7 +281,8 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         //Aceptar
         String[] valores = {tfl0.getText(), tfl1.getText(), tfl2.getText(), 
-                tfl3.getText(), tfl4.getText(), pfl0.getPassword().toString() 
+                tfl3.getText(), tfl5.getText(), tfl4.getText(), 
+                pfl0.getPassword().toString() 
                 };
         
         presenter.notifyPresenter("Aceptar", valores);
@@ -305,9 +311,11 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
 
     private void enviaUpdateConexion(){
         String[] valores = {tfl0.getText(), tfl1.getText(), tfl2.getText(), 
-                tfl3.getText(), tfl5.getText()
+                tfl3.getText()
                 };
-        presenter.notifyPresenter("CambioConexion", valores);
+        if (presenter!=null){
+            presenter.notifyPresenter("CambioConexion", valores);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
