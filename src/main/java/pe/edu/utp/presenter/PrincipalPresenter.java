@@ -2,10 +2,14 @@ package pe.edu.utp.presenter;
 
 import javax.swing.SwingUtilities;
 import pe.edu.utp.dao.CabFacturaDao;
+import pe.edu.utp.dao.CabGuiaRemDao;
 import pe.edu.utp.dao.DetFacturaDao;
+import pe.edu.utp.dao.DetGuiaRemDao;
+import pe.edu.utp.model.ConfiguracionModel;
 import pe.edu.utp.model.ListaFacturaModel;
 import pe.edu.utp.model.ListaGuiasRemisionModel;
 import pe.edu.utp.model.MVPModel;
+import pe.edu.utp.view.ConfiguracionView;
 import pe.edu.utp.view.ListaFacturaView;
 import pe.edu.utp.view.ListaGuiasRemisionView;
 import pe.edu.utp.view.MVPView;
@@ -23,7 +27,7 @@ public class PrincipalPresenter implements MVPPresenter{
         this.result = new Object[]{(Boolean) true};
         this.tipoView = (((String) params[0]).length()>=0) ? (String) params[0] : "READ";
         view.setPresenter(this);
-        view.updateView("Iniciar", new Object[]{"Guia de Remision"});
+        view.updateView("Iniciar", new Object[]{"Sistema de Ventas"});
         view.showView();
     }
     
@@ -49,7 +53,7 @@ public class PrincipalPresenter implements MVPPresenter{
                 SwingUtilities.invokeLater(() -> {
                     MVPPresenter p = new ListaGuiasRemisionPresenter(
                             new ListaGuiasRemisionView(null, true), 
-                            new ListaGuiasRemisionModel(), 
+                            new ListaGuiasRemisionModel(new CabGuiaRemDao(), new DetGuiaRemDao()), 
                             new Object[]{"MAINTENANCE"});
                 });
             }
@@ -61,7 +65,14 @@ public class PrincipalPresenter implements MVPPresenter{
                             new Object[]{"MAINTENANCE"});
                 });
             }
-            
+            if (((String) params[0]).equalsIgnoreCase("Configuracion")){
+                SwingUtilities.invokeLater(() -> {
+                    MVPPresenter p = new ConfiguracionPresenter(
+                            new ConfiguracionView(null, true), 
+                            new ConfiguracionModel(), 
+                            new Object[]{"MAINTENANCE"});
+                });
+            }
         }
         
     }

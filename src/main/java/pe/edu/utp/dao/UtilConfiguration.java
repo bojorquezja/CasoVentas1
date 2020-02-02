@@ -15,7 +15,7 @@ public class UtilConfiguration {
         return (res == null ? null : res[0]);
     }
     public static String[] getArray(String[] propiedades){
-        if (Files.exists(Paths.get("config.properties"))) {
+        if (!Paths.get("config.properties").toFile().exists()) {
             reset();
         }
         String[] res = new String[propiedades.length];

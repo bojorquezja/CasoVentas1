@@ -8,6 +8,11 @@ import pe.edu.utp.entity.DetGuiaRem;
 public class ListaGuiasRemisionModel implements MVPModel{
     private Dao<CabGuiaRem> daoCG;
     private Dao<DetGuiaRem> daoDG;
+
+    public ListaGuiasRemisionModel(Dao<CabGuiaRem> daoCG, Dao<DetGuiaRem> daoDG) {
+        this.daoCG = daoCG;
+        this.daoDG = daoDG;
+    }
     
     @Override
     public void updateModel(String subject, Object[] params) {
