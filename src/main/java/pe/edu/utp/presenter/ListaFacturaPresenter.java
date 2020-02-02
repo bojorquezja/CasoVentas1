@@ -1,6 +1,8 @@
 package pe.edu.utp.presenter;
 
 import javax.swing.SwingUtilities;
+import pe.edu.utp.dao.CabFacturaDao;
+import pe.edu.utp.dao.DetFacturaDao;
 import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.model.FacturaModel;
 import pe.edu.utp.model.MVPModel;
@@ -50,7 +52,7 @@ public class ListaFacturaPresenter implements MVPPresenter{
             SwingUtilities.invokeLater(() -> {
                 MVPPresenter p = new FacturaPresenter(
                         new FacturaView(null, true), 
-                        new FacturaModel(), 
+                        new FacturaModel(new CabFacturaDao(), new DetFacturaDao()), 
                         new Object[]{"INSERT"});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
@@ -64,7 +66,7 @@ public class ListaFacturaPresenter implements MVPPresenter{
             SwingUtilities.invokeLater(() -> {
                 MVPPresenter p = new FacturaPresenter(
                         new FacturaView(null, true), 
-                        new FacturaModel(), 
+                        new FacturaModel(new CabFacturaDao(), new DetFacturaDao()), 
                         new Object[]{"UPDATE", params[2]});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
