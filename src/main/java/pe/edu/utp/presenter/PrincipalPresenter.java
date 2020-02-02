@@ -1,6 +1,8 @@
 package pe.edu.utp.presenter;
 
 import javax.swing.SwingUtilities;
+import pe.edu.utp.dao.CabFacturaDao;
+import pe.edu.utp.dao.DetFacturaDao;
 import pe.edu.utp.model.ListaFacturaModel;
 import pe.edu.utp.model.ListaGuiasRemisionModel;
 import pe.edu.utp.model.MVPModel;
@@ -55,7 +57,7 @@ public class PrincipalPresenter implements MVPPresenter{
                 SwingUtilities.invokeLater(() -> {
                     MVPPresenter p = new ListaFacturaPresenter(
                             new ListaFacturaView(null, true), 
-                            new ListaFacturaModel(), 
+                            new ListaFacturaModel(new CabFacturaDao(), new DetFacturaDao()), 
                             new Object[]{"MAINTENANCE"});
                 });
             }
