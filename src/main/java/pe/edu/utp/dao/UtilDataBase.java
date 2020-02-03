@@ -31,7 +31,7 @@ public class UtilDataBase {
     
     public static <T> List<T> traeListaBD(String sql, Class[] tipoObjeto, Object[] valores, BiConsumer<List<T>, ResultSet> accion){
         List<T> tlista = new ArrayList<>();
-        try (Connection con = DriverManager.getConnection(CONNJDBC,USER,PASS.toString());
+        try (Connection con = DriverManager.getConnection(CONNJDBC,USER,new String(PASS));
             PreparedStatement stat = con.prepareStatement(sql);){
             
             for(int x=0 ; x < tipoObjeto.length ; x++){
@@ -114,59 +114,15 @@ public class UtilDataBase {
             return null;
         }
     }
-    public static String getJDBCConnection() {
-        String[] propiedades = {"JDBC.Server", "JDBC.Port", "JDBC.DataBase",
-                            "JDBC.Parameters"
-                            };
-        String[] valores = UtilConfiguration.getArray(propiedades);
-        if (valores == null){
-            return null;
-        }else{
-            return "jdbc:mysql://" + valores[0] + ":"+
-                valores[1] + "/" +
-                valores[2] +
-                (valores[3].isEmpty() ? "" : "?" + valores[3]);
-        }
+    private static String getJDBCConnection() {
+        return UtilConfiguration.get("JDBC.Connection");
     }
-    public static String getJDBCUser() {
+    private static String getJDBCUser() {
         return UtilConfiguration.get("JDBC.User");
     }
-    public static char[] getJDBCPassword() {
+    private static char[] getJDBCPassword() {
         String res = UtilConfiguration.get("JDBC.Password");
         return (res == null ? null : res.toCharArray());
     }
-    //retirar
-    public static void setJDBCConfiguration(String server, String port, String dataBase, String parameters, String user, char[] password) {
-        try (OutputStream output = Files.newOutputStream(Paths.get(UtilDataBase.class.getClassLoader().getResource("config.properties").toURI()))) {
-            Properties prop = new Properties();
-            // set the properties value
-            prop.setProperty("JDBC.Server", server);
-            prop.setProperty("JDBC.Port", port);
-            prop.setProperty("JDBC.DataBase", dataBase);
-            prop.setProperty("JDBC.Parameters", parameters);
-            prop.setProperty("JDBC.User", user);
-            prop.setProperty("JDBC.Password", password.toString());
-            // save properties to project root folder
-            prop.store(output, null);
-        } catch (IOException | URISyntaxException io) {
-            io.printStackTrace();
-        }
-    }
-    //retirar
-    public static void resetJDBCConfiguration() {
-        try (OutputStream output = Files.newOutputStream(Paths.get(UtilDataBase.class.getClassLoader().getResource("config.properties").toURI()))) {
-            Properties prop = new Properties();
-            // set the properties value
-            prop.setProperty("JDBC.Server", "localhost");
-            prop.setProperty("JDBC.Port", "3306");
-            prop.setProperty("JDBC.DataBase", "ventas1");
-            prop.setProperty("JDBC.Parameters", "useLegacyDatetimeCode=false&serverTimezone=America/Lima");
-            prop.setProperty("JDBC.User", "root");
-            prop.setProperty("JDBC.Password", "");
-            // save properties to project root folder
-            prop.store(output, null);
-        } catch (IOException | URISyntaxException io) {
-            io.printStackTrace();
-        }
-    }
+   
 }

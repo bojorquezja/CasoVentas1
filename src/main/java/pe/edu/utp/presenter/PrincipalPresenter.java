@@ -1,5 +1,6 @@
 package pe.edu.utp.presenter;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import pe.edu.utp.dao.CabFacturaDao;
 import pe.edu.utp.dao.CabGuiaRemDao;
@@ -68,9 +69,9 @@ public class PrincipalPresenter implements MVPPresenter{
             if (((String) params[0]).equalsIgnoreCase("Configuracion")){
                 SwingUtilities.invokeLater(() -> {
                     MVPPresenter p = new ConfiguracionPresenter(
-                            new ConfiguracionView(null, true), 
+                            new ConfiguracionView((JFrame) view, true), 
                             new ConfiguracionModel(), 
-                            new Object[]{"MAINTENANCE"});
+                            new Object[]{""});
                 });
             }
         }

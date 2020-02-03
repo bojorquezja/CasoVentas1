@@ -283,7 +283,7 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
         //Aceptar
         String[] valores = {tfl0.getText(), tfl1.getText(), tfl2.getText(), 
                 tfl3.getText(), tfl5.getText(), tfl4.getText(), 
-                pfl0.getPassword().toString() 
+                new String(pfl0.getPassword())
                 };
         
         presenter.notifyPresenter("Aceptar", valores);

@@ -46,8 +46,10 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         meb1 = new javax.swing.JMenu();
-        mei1 = new javax.swing.JMenuItem();
-        mei2 = new javax.swing.JMenuItem();
+        mei1_0 = new javax.swing.JMenuItem();
+        meb2 = new javax.swing.JMenu();
+        mei2_0 = new javax.swing.JMenuItem();
+        mei2_1 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -55,30 +57,42 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Ventas");
 
-        meb1.setText("Ventas");
-        meb1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                meb1ActionPerformed(evt);
-            }
-        });
+        meb1.setText("Mantenimiento");
 
-        mei1.setText("Guia Remision");
-        mei1.addActionListener(new java.awt.event.ActionListener() {
+        mei1_0.setText("Configuracion");
+        mei1_0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mei1ActionPerformed(evt);
+                mei1_0ActionPerformed(evt);
             }
         });
-        meb1.add(mei1);
-
-        mei2.setText("Factura");
-        mei2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mei2ActionPerformed(evt);
-            }
-        });
-        meb1.add(mei2);
+        meb1.add(mei1_0);
 
         jMenuBar1.add(meb1);
+
+        meb2.setText("Ventas");
+        meb2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meb2ActionPerformed(evt);
+            }
+        });
+
+        mei2_0.setText("Guia Remision");
+        mei2_0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mei2_0ActionPerformed(evt);
+            }
+        });
+        meb2.add(mei2_0);
+
+        mei2_1.setText("Factura");
+        mei2_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mei2_1ActionPerformed(evt);
+            }
+        });
+        meb2.add(mei2_1);
+
+        jMenuBar1.add(meb2);
 
         setJMenuBar(jMenuBar1);
 
@@ -86,69 +100,42 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 869, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 559, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mei1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei1ActionPerformed
-        presenter.notifyPresenter("Menu", new Object[]{"MantFactura"});
-    }//GEN-LAST:event_mei1ActionPerformed
-
-    private void mei2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei2ActionPerformed
+    private void mei2_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei2_0ActionPerformed
         presenter.notifyPresenter("Menu", new Object[]{"MantGuiaRemision"});
-    }//GEN-LAST:event_mei2ActionPerformed
+    }//GEN-LAST:event_mei2_0ActionPerformed
 
-    private void meb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meb1ActionPerformed
+    private void mei2_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei2_1ActionPerformed
+        presenter.notifyPresenter("Menu", new Object[]{"MantFactura"});
+    }//GEN-LAST:event_mei2_1ActionPerformed
+
+    private void meb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meb2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_meb1ActionPerformed
+    }//GEN-LAST:event_meb2ActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void mei1_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei1_0ActionPerformed
+        presenter.notifyPresenter("Menu", new Object[]{"Configuracion"});
+    }//GEN-LAST:event_mei1_0ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PrincipalView().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu meb1;
-    private javax.swing.JMenuItem mei1;
-    private javax.swing.JMenuItem mei2;
+    private javax.swing.JMenu meb2;
+    private javax.swing.JMenuItem mei1_0;
+    private javax.swing.JMenuItem mei2_0;
+    private javax.swing.JMenuItem mei2_1;
     // End of variables declaration//GEN-END:variables
 
     
