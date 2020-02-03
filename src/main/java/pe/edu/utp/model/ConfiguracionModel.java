@@ -19,11 +19,7 @@ public class ConfiguracionModel implements MVPModel{
                 
             UtilConfiguration.setArray(propiedades, (String[]) params);
         }
-        if (subject.equalsIgnoreCase("Reset")) {
-            //params: String[]
-                
-            UtilConfiguration.reset();
-        }
+        
     }
 
     @Override
@@ -31,6 +27,13 @@ public class ConfiguracionModel implements MVPModel{
         if (subject.equalsIgnoreCase("Todo")) {
             //params: 
             return UtilConfiguration.getArray(new String[]{"JDBC.Server", "JDBC.Port", "JDBC.DataBase",
+                            "JDBC.Parameters", "JDBC.Connection", "JDBC.User", 
+                            "JDBC.Password"}
+            );
+        }
+        if (subject.equalsIgnoreCase("Reset")) {
+            //params: 
+            return UtilConfiguration.getDefaultArray(new String[]{"JDBC.Server", "JDBC.Port", "JDBC.DataBase",
                             "JDBC.Parameters", "JDBC.Connection", "JDBC.User", 
                             "JDBC.Password"}
             );

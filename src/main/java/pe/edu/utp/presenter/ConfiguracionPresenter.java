@@ -46,8 +46,7 @@ public class ConfiguracionPresenter implements MVPPresenter{
         }
         //TODO Reset y CambioConexion en textfield
         if (subject.equalsIgnoreCase("Reset")) {
-            model.updateModel("Reset", null);
-            Object[] ent=this.model.loadModel("Todo", null);
+            Object[] ent=this.model.loadModel("Reset", null);
             view.updateView("Reset", ent);
         }
         if (subject.equalsIgnoreCase("CambioConexion")) {
