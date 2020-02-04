@@ -3,7 +3,6 @@ package pe.edu.utp.presenter;
 import javax.swing.SwingUtilities;
 import pe.edu.utp.dao.CabGuiaRemDao;
 import pe.edu.utp.dao.DetGuiaRemDao;
-import pe.edu.utp.entity.CabGuiaRem;
 import pe.edu.utp.model.GuiasRemisionModel;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.GuiasRemisionView;

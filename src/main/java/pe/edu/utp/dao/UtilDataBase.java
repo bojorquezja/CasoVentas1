@@ -52,7 +52,7 @@ public class UtilDataBase {
     public static boolean grabaTransaccionBD(String[] sql, Class[][] tipoObjeto, Object[][] valores){
         boolean resp = false;
         int totReg=0;
-        try (Connection con = DriverManager.getConnection(CONNJDBC,USER,PASS.toString());){
+        try (Connection con = DriverManager.getConnection(CONNJDBC,USER,new String(PASS));){
             con.setAutoCommit(false);
             for (int z=0 ; z<sql.length ; z++){
                 try (PreparedStatement stat = con.prepareStatement(sql[z]);){

@@ -1,7 +1,6 @@
 package pe.edu.utp.presenter;
 
 import pe.edu.utp.entity.CabFactura;
-import pe.edu.utp.entity.DetFactura;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.MVPView;
 

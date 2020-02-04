@@ -3,7 +3,6 @@ package pe.edu.utp.presenter;
 import javax.swing.SwingUtilities;
 import pe.edu.utp.dao.CabFacturaDao;
 import pe.edu.utp.dao.DetFacturaDao;
-import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.model.FacturaModel;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.FacturaView;

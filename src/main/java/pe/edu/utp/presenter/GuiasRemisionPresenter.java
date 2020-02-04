@@ -1,7 +1,6 @@
 package pe.edu.utp.presenter;
 
 import pe.edu.utp.entity.CabGuiaRem;
-import pe.edu.utp.entity.DetGuiaRem;
 import pe.edu.utp.model.MVPModel;
 import pe.edu.utp.view.MVPView;
 
