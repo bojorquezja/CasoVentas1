@@ -10,7 +10,7 @@ public class FilesUtil {
     public static boolean exportResourceFile(String archOrigen, String archDestino){
         boolean ok = true;
         try {
-            InputStream src = FilesUtil.class.getResourceAsStream(archOrigen);
+            InputStream src = FilesUtil.class.getClassLoader().getResourceAsStream(archOrigen);
             Files.copy(src, Paths.get(archDestino), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             ok = false;

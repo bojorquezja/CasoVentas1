@@ -42,6 +42,7 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
     
     public PrincipalView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -80,6 +81,11 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
 
         mei1_1.setText("Descarga SQLs");
         mei1_1.setToolTipText("");
+        mei1_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mei1_1ActionPerformed(evt);
+            }
+        });
         meb1.add(mei1_1);
 
         jMenuBar1.add(meb1);
@@ -142,8 +148,12 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
     }//GEN-LAST:event_mei1_0ActionPerformed
 
     private void meb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meb1ActionPerformed
-        presenter.notifyPresenter("Menu", new Object[]{"Descarga SQL"});
+        
     }//GEN-LAST:event_meb1ActionPerformed
+
+    private void mei1_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mei1_1ActionPerformed
+        presenter.notifyPresenter("Menu", new Object[]{"Descarga SQL"});
+    }//GEN-LAST:event_mei1_1ActionPerformed
 
     
 

@@ -103,6 +103,7 @@ public class ListaGuiasRemisionView extends javax.swing.JDialog implements MVPVi
                 presenter.notifyPresenter("Cancelar", null);
             }
         });
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
