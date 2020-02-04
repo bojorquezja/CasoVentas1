@@ -25,7 +25,6 @@ public class App{
         }
         //</editor-fold>
 
-
         SwingUtilities.invokeLater(() -> {
             MVPPresenter p = new PrincipalPresenter(
                     new PrincipalView(), 

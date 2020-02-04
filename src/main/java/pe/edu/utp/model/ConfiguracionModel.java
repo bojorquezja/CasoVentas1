@@ -1,11 +1,6 @@
 package pe.edu.utp.model;
 
-import java.util.List;
-import pe.edu.utp.dao.CabGuiaRemDao;
-import pe.edu.utp.dao.DetGuiaRemDao;
 import pe.edu.utp.dao.UtilConfiguration;
-import pe.edu.utp.entity.CabGuiaRem;
-import pe.edu.utp.entity.DetGuiaRem;
 
 public class ConfiguracionModel implements MVPModel{
 
