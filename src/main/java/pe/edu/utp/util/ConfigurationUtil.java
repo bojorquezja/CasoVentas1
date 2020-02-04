@@ -1,4 +1,4 @@
-package pe.edu.utp.dao;
+package pe.edu.utp.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class UtilConfiguration {
+public class ConfigurationUtil {
     public static String get(String propiedad){
         String[] res = getArray(new String[]{propiedad});
         return (res == null ? null : res[0]);
@@ -63,7 +63,7 @@ public class UtilConfiguration {
     
     private static Properties initialConfig(){
         Properties defa = new Properties();
-        try (InputStream input = UtilDataBase.class.getClassLoader().getResourceAsStream("config.properties")) {
+        try (InputStream input = DataBaseUtil.class.getClassLoader().getResourceAsStream("config.properties")) {
             //load a properties file from class path, inside static method
             defa.load(input);
         } catch (IOException ex) {

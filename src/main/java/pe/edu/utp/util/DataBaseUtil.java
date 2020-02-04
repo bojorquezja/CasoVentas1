@@ -1,5 +1,6 @@
-package pe.edu.utp.dao;
+package pe.edu.utp.util;
 
+import pe.edu.utp.util.ConfigurationUtil;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class UtilDataBase {
+public class DataBaseUtil {
     private static final String CONNJDBC = getJDBCConnection();
     private static final String USER = getJDBCUser();
     private static final char[] PASS = getJDBCPassword();
@@ -103,13 +104,13 @@ public class UtilDataBase {
         }
     }
     private static String getJDBCConnection() {
-        return UtilConfiguration.get("JDBC.Connection");
+        return ConfigurationUtil.get("JDBC.Connection");
     }
     private static String getJDBCUser() {
-        return UtilConfiguration.get("JDBC.User");
+        return ConfigurationUtil.get("JDBC.User");
     }
     private static char[] getJDBCPassword() {
-        String res = UtilConfiguration.get("JDBC.Password");
+        String res = ConfigurationUtil.get("JDBC.Password");
         return (res == null ? null : res.toCharArray());
     }
    

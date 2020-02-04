@@ -1,5 +1,6 @@
 package pe.edu.utp.view;
 
+import javax.swing.JOptionPane;
 import pe.edu.utp.presenter.MVPPresenter;
 
 public class PrincipalView extends javax.swing.JFrame implements MVPView{
@@ -32,6 +33,10 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
             //params[]: Titulo
             this.setTitle((String) params[0]);
         }
+        if (subject.equalsIgnoreCase("MsgBox")) {
+            //params[]: Mensaje
+            JOptionPane.showMessageDialog(null, params[0]);
+        }
         return resultUpdateView;
     }
     
@@ -47,6 +52,7 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
         jMenuBar1 = new javax.swing.JMenuBar();
         meb1 = new javax.swing.JMenu();
         mei1_0 = new javax.swing.JMenuItem();
+        mei1_1 = new javax.swing.JMenuItem();
         meb2 = new javax.swing.JMenu();
         mei2_0 = new javax.swing.JMenuItem();
         mei2_1 = new javax.swing.JMenuItem();
@@ -58,6 +64,11 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
         setTitle("Sistema de Ventas");
 
         meb1.setText("Mantenimiento");
+        meb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meb1ActionPerformed(evt);
+            }
+        });
 
         mei1_0.setText("Configuracion");
         mei1_0.addActionListener(new java.awt.event.ActionListener() {
@@ -66,6 +77,10 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
             }
         });
         meb1.add(mei1_0);
+
+        mei1_1.setText("Descarga SQLs");
+        mei1_1.setToolTipText("");
+        meb1.add(mei1_1);
 
         jMenuBar1.add(meb1);
 
@@ -126,6 +141,10 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
         presenter.notifyPresenter("Menu", new Object[]{"Configuracion"});
     }//GEN-LAST:event_mei1_0ActionPerformed
 
+    private void meb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meb1ActionPerformed
+        presenter.notifyPresenter("Menu", new Object[]{"Descarga SQL"});
+    }//GEN-LAST:event_meb1ActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -134,6 +153,7 @@ public class PrincipalView extends javax.swing.JFrame implements MVPView{
     private javax.swing.JMenu meb1;
     private javax.swing.JMenu meb2;
     private javax.swing.JMenuItem mei1_0;
+    private javax.swing.JMenuItem mei1_1;
     private javax.swing.JMenuItem mei2_0;
     private javax.swing.JMenuItem mei2_1;
     // End of variables declaration//GEN-END:variables
