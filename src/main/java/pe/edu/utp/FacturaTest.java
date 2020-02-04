@@ -54,6 +54,14 @@ public class FacturaTest {
                     new Object[]{"MAINTENANCE"});
             System.out.println(p.getResult()[0]);   //prueba
         });
+        
+        SwingUtilities.invokeLater(() -> {
+            MVPPresenter p = new ConfiguracionPresenter(
+                    new ConfiguracionView(null, true), 
+                    new ConfiguracionModel(), 
+                    new Object[]{""});
+            //System.out.println(p.getResult()[0]);   //prueba
+        });
 */
     }
     

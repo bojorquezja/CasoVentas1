@@ -1,24 +1,9 @@
 package pe.edu.utp;
 
 import javax.swing.SwingUtilities;
-import pe.edu.utp.model.ConfiguracionModel;
-import pe.edu.utp.model.FacturaModel;
-import pe.edu.utp.model.GuiasRemisionModel;
-import pe.edu.utp.model.ListaFacturaModel;
-import pe.edu.utp.model.ListaGuiasRemisionModel;
 import pe.edu.utp.model.PrincipalModel;
-import pe.edu.utp.presenter.ConfiguracionPresenter;
-import pe.edu.utp.presenter.FacturaPresenter;
 import pe.edu.utp.presenter.MVPPresenter;
-import pe.edu.utp.presenter.GuiasRemisionPresenter;
-import pe.edu.utp.presenter.ListaFacturaPresenter;
-import pe.edu.utp.presenter.ListaGuiasRemisionPresenter;
 import pe.edu.utp.presenter.PrincipalPresenter;
-import pe.edu.utp.view.ConfiguracionView;
-import pe.edu.utp.view.FacturaView;
-import pe.edu.utp.view.GuiasRemisionView;
-import pe.edu.utp.view.ListaFacturaView;
-import pe.edu.utp.view.ListaGuiasRemisionView;
 import pe.edu.utp.view.PrincipalView;
 
 public class App{
@@ -42,9 +27,9 @@ public class App{
 
 
         SwingUtilities.invokeLater(() -> {
-            MVPPresenter p = new ConfiguracionPresenter(
-                    new ConfiguracionView(null, true), 
-                    new ConfiguracionModel(), 
+            MVPPresenter p = new PrincipalPresenter(
+                    new PrincipalView(), 
+                    new PrincipalModel(), 
                     new Object[]{""});
             //System.out.println(p.getResult()[0]);   //prueba
         });
