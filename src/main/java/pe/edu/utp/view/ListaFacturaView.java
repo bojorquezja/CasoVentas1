@@ -104,6 +104,7 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
                 presenter.notifyPresenter("Cancelar", null);
             }
         });
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

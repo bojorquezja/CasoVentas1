@@ -168,6 +168,7 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
                 presenter.notifyPresenter("Cancelar", null);
             }
         });
+        this.setLocationRelativeTo(null);
         //calcula suma
         tbl0.getModel().addTableModelListener((e) -> {
             TableModel tm = (TableModel) e.getSource();

@@ -138,6 +138,7 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 presenter.notifyPresenter("Cancelar", null);
             }
         });
+        this.setLocationRelativeTo(null);
         //corregir Lgooddatepicker
         DatePickerSettings dps = new DatePickerSettings();
         dps.setFormatForDatesCommonEra("dd/MM/yyyy");

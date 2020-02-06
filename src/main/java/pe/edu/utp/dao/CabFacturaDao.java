@@ -1,11 +1,12 @@
 package pe.edu.utp.dao;
 
+import pe.edu.utp.util.DataBaseUtil;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import static pe.edu.utp.dao.UtilDataBase.toLocalDate;
+import static pe.edu.utp.util.DataBaseUtil.toLocalDate;
 import pe.edu.utp.entity.CabFactura;
 
 public class CabFacturaDao implements Dao<CabFactura>{
@@ -20,7 +21,7 @@ public class CabFacturaDao implements Dao<CabFactura>{
                     "FROM CabFactura " +
                     "WHERE codigoFac = ?";
         Object[] valores = {(String) pk};
-        List<CabFactura> tlista = UtilDataBase.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
+        List<CabFactura> tlista = DataBaseUtil.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
             try{
                 CabFactura cb = new CabFactura(u.getString(1), toLocalDate(u.getDate(2)), u.getString(3), u.getString(4),
                         u.getString(5), u.getString(6), u.getString(7), u.getString(8), 
@@ -46,7 +47,7 @@ public class CabFacturaDao implements Dao<CabFactura>{
                     "WHERE codigoFac like ? AND razSocCliente like ?";
         valores[0] = "%"+valores[0]+"%";
         valores[1] = "%"+valores[1]+"%";
-        List<CabFactura> tlista = UtilDataBase.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
+        List<CabFactura> tlista = DataBaseUtil.traeListaBD(sql, tipoObjeto, valores, (t, u) -> {
             try{
                 CabFactura cb = new CabFactura(u.getString(1), toLocalDate(u.getDate(2)), u.getString(3), u.getString(4),
                         u.getString(5), u.getString(6), u.getString(7), u.getString(8), 
@@ -80,7 +81,7 @@ public class CabFacturaDao implements Dao<CabFactura>{
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
         
-        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return DataBaseUtil.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class CabFacturaDao implements Dao<CabFactura>{
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
         
-        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return DataBaseUtil.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class CabFacturaDao implements Dao<CabFactura>{
         String[] sql = {sqlA};
         Class[][] tipoObjeto = {tipoObjetoA};
         Object[][] valores = {valoresA};
-        return UtilDataBase.grabaTransaccionBD(sql, tipoObjeto, valores);
+        return DataBaseUtil.grabaTransaccionBD(sql, tipoObjeto, valores);
     }
     
 }
