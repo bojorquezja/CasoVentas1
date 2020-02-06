@@ -2,6 +2,7 @@ package pe.edu.utp.view;
 
 import javax.swing.JOptionPane;
 import pe.edu.utp.presenter.MVPPresenter;
+import pe.edu.utp.util.DocumentListenerUtil;
 
 public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
     private MVPPresenter presenter;
@@ -87,6 +88,11 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
             }
         });
         this.setLocationRelativeTo(null);
+        //value change event
+        tfl0.getDocument().addDocumentListener((DocumentListenerUtil) e -> enviaUpdateConexion());
+        tfl1.getDocument().addDocumentListener((DocumentListenerUtil) e -> enviaUpdateConexion());
+        tfl2.getDocument().addDocumentListener((DocumentListenerUtil) e -> enviaUpdateConexion());
+        tfl3.getDocument().addDocumentListener((DocumentListenerUtil) e -> enviaUpdateConexion());
     }
 
     @SuppressWarnings("unchecked")
@@ -296,19 +302,19 @@ public class ConfiguracionView extends javax.swing.JDialog implements MVPView {
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void tfl0PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl0PropertyChange
-        enviaUpdateConexion();
+        
     }//GEN-LAST:event_tfl0PropertyChange
 
     private void tfl1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl1PropertyChange
-        enviaUpdateConexion();
+        
     }//GEN-LAST:event_tfl1PropertyChange
 
     private void tfl2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl2PropertyChange
-        enviaUpdateConexion();
+        
     }//GEN-LAST:event_tfl2PropertyChange
 
     private void tfl3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfl3PropertyChange
-        enviaUpdateConexion();
+        
     }//GEN-LAST:event_tfl3PropertyChange
 
     private void enviaUpdateConexion(){
