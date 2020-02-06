@@ -42,7 +42,7 @@ public class ConfiguracionPresenter implements MVPPresenter{
         if (subject.equalsIgnoreCase("Aceptar")) {
             //params: String[] 6 par
             model.updateModel("Todo", params);
-            
+            view.closeView();
         }
         //TODO Reset y CambioConexion en textfield
         if (subject.equalsIgnoreCase("Reset")) {

@@ -1,5 +1,7 @@
 CREATE DATABASE ventas1_2 /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+USE ventas1_2;
+
 CREATE TABLE cabguiarem (
   codGuiaRem varchar(12) NOT NULL,
   fechaEmi date DEFAULT NULL,
@@ -17,7 +19,7 @@ CREATE TABLE detguiarem (
   codGuiaRem varchar(12) NOT NULL,
   codigoProd varchar(10) DEFAULT NULL,
   descrProd varchar(255) DEFAULT NULL,
-  cantidad int(11) DEFAULT NULL
+  cantidad int(11) DEFAULT NULL,
   PRIMARY KEY (codGuiaRem)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,8 +49,4 @@ CREATE TABLE detfactura (
   valorVenta double DEFAULT NULL,
   PRIMARY KEY (codigoFac)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
 
