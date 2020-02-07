@@ -1,11 +1,18 @@
 package pe.edu.utp.view;
 
+import java.awt.Component;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.atomic.DoubleAdder;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.presenter.MVPPresenter;
+import pe.edu.utp.util.TypesUtil;
 
 public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
     private MVPPresenter presenter;
@@ -96,7 +103,7 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
         }).forEachOrdered((objs) -> {
             tblModel.addRow(objs);
         });
-        tfl2.setText("" + da.sum());
+        tfl2.setText("" + TypesUtil.roundNormal(da.sum(), 2) );
     }
     
     public ListaFacturaView(java.awt.Frame parent, boolean modal) {
@@ -109,6 +116,18 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
             }
         });
         this.setLocationRelativeTo(null);
+        DateTimeFormatter ldformat = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        for(int x=0 ; x < tbl1.getColumnModel().getColumnCount() ; x++){
+            tbl1.getColumnModel().getColumn(x).setCellRenderer((TableCellRenderer) new DefaultTableCellRenderer() {
+
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    if( value instanceof LocalDate) {
+                        value = ldformat.format((LocalDate)value);
+                    }
+                    return super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+                }
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")

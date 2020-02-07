@@ -46,6 +46,9 @@ public class FacturaPresenter implements MVPPresenter{
             //params: CabFactura con Det
             if (this.tipoView.equalsIgnoreCase("INSERT")){
                 CabFactura ent = (CabFactura) params[0];
+                if (ent.getCodGuiaRem().isEmpty()){
+                    ent.setCodGuiaRem(null);
+                }
                 try{
                     model.updateModel("InsertCabDet", new Object[]{ ent });
                 }catch(Exception e){
@@ -56,6 +59,9 @@ public class FacturaPresenter implements MVPPresenter{
             }
             if (this.tipoView.equalsIgnoreCase("UPDATE")){
                 CabFactura ent = (CabFactura) params[0];
+                if (ent.getCodGuiaRem().isEmpty()){
+                    ent.setCodGuiaRem(null);
+                }
                 try{
                     model.updateModel("UpdateCabDet", new Object[]{ ent });
                 }catch(Exception e){

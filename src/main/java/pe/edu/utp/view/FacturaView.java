@@ -2,16 +2,22 @@ package pe.edu.utp.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.toddfast.util.convert.TypeConverter;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.DoubleAdder;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import pe.edu.utp.entity.CabFactura;
 import pe.edu.utp.entity.DetFactura;
 import pe.edu.utp.presenter.MVPPresenter;
+import pe.edu.utp.util.TypesUtil;
 
 public class FacturaView extends javax.swing.JDialog implements MVPView {
     private MVPPresenter presenter;
@@ -153,9 +159,9 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
                 val1 += 0.0;
             }
         }
-        tfl7.setText(""+(Math.round(val1*100.0)/100.0));
-        tfl8.setText(""+(Math.round((val1*0.18)*100.0)/100.0));
-        tfl9.setText(""+(Math.round((val1*1.18)*100.0)/100.0));
+        tfl7.setText(""+ TypesUtil.roundNormal(val1, 2));
+        tfl8.setText(""+ TypesUtil.roundNormal(val1*0.18, 2));
+        tfl9.setText(""+ TypesUtil.roundNormal(val1*1.18, 2));
     }
     
     public FacturaView(java.awt.Frame parent, boolean modal) {
@@ -173,7 +179,19 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
             TableModel tm = (TableModel) e.getSource();
             this.sumaTotales(tm);
         });
-        
+        //formatos a celdas de tabla
+        DateTimeFormatter ldformat = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        for(int x=0 ; x < tbl0.getColumnModel().getColumnCount() ; x++){
+            tbl0.getColumnModel().getColumn(x).setCellRenderer((TableCellRenderer) new DefaultTableCellRenderer() {
+
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    if( value instanceof LocalDate) {
+                        value = ldformat.format((LocalDate)value);
+                    }
+                    return super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+                }
+            });
+        }
         //corregir Lgooddatepicker
         DatePickerSettings dps = new DatePickerSettings();
         dps.setFormatForDatesCommonEra("dd/MM/yyyy");
@@ -251,6 +269,11 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
                 "Codigo Producto", "Descripcion Producto", "Cantidad", "PU", "Valor Venta"
             }
         ));
+        tbl0.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tbl0FocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl0);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Empresa"));
@@ -527,6 +550,12 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
             }
         }
     }//GEN-LAST:event_btn11ActionPerformed
+
+    private void tbl0FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbl0FocusLost
+        if (tbl0.isEditing()) {
+            tbl0.getCellEditor().stopCellEditing();
+        }
+    }//GEN-LAST:event_tbl0FocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

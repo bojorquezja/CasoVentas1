@@ -28,7 +28,7 @@ public class FacturaModel implements MVPModel{
             //params: CabFactura con Det
             CabFactura ent = (CabFactura) params[0];
             daoCF.update(ent);
-            daoDF.delete(ent.getCodGuiaRem());
+            daoDF.delete(ent.getCodigoFac());
             ent.getDetFactura().forEach((item) -> {
                 daoDF.insert(item);
             });

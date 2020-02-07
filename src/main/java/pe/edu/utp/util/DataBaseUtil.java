@@ -25,15 +25,35 @@ public class DataBaseUtil {
             
             for(int x=0 ; x < tipoObjeto.length ; x++){
                 if (tipoObjeto[x].equals(String.class)){
-                    stat.setString(x+1, (String) valores[x]);
+                    if ( valores[x] == null){
+                        stat.setNull(x+1, java.sql.Types.VARCHAR);
+                    }else{
+                        stat.setString(x+1, (String) valores[x]);
+                    }
                 } else if (tipoObjeto[x].equals(LocalDate.class)){
-                    stat.setDate(x+1, toSqlDate((LocalDate) valores[x]));
+                    if ( valores[x] == null){
+                        stat.setNull(x+1, java.sql.Types.DATE);
+                    }else{
+                        stat.setDate(x+1, toSqlDate((LocalDate) valores[x]));
+                    }
                 } else if (tipoObjeto[x].equals(Integer.class)){
-                    stat.setInt(x+1, (Integer) valores[x]);
+                    if ( valores[x] == null){
+                        stat.setNull(x+1, java.sql.Types.INTEGER);
+                    }else{
+                        stat.setInt(x+1, (Integer) valores[x]);
+                    }
                 } else if (tipoObjeto[x].equals(Float.class)){
-                    stat.setFloat(x+1, (Float) valores[x]);
+                    if ( valores[x] == null){
+                        stat.setNull(x+1, java.sql.Types.FLOAT);
+                    }else{
+                        stat.setFloat(x+1, (Float) valores[x]);
+                    }
                 } else if (tipoObjeto[x].equals(Double.class)){
-                    stat.setDouble(x+1, (Double) valores[x]);
+                    if ( valores[x] == null){
+                        stat.setNull(x+1, java.sql.Types.DOUBLE);
+                    }else{
+                        stat.setDouble(x+1, (Double) valores[x]);
+                    }
                 }
             }
             try (ResultSet rs = stat.executeQuery()) {
@@ -59,15 +79,35 @@ public class DataBaseUtil {
                 try (PreparedStatement stat = con.prepareStatement(sql[z]);){
                     for(int x=0 ; x < tipoObjeto[z].length ; x++){
                         if (tipoObjeto[z][x].equals(String.class)){
-                            stat.setString(x+1, (String) valores[z][x]);
+                            if ( valores[z][x] == null){
+                                stat.setNull(x+1, java.sql.Types.VARCHAR);
+                            }else{
+                                stat.setString(x+1, (String) valores[z][x]);
+                            }
                         } else if (tipoObjeto[z][x].equals(LocalDate.class)){
-                            stat.setDate(x+1, toSqlDate((LocalDate) valores[z][x]));
+                            if ( valores[z][x] == null){
+                                stat.setNull(x+1, java.sql.Types.DATE);
+                            }else{
+                                stat.setDate(x+1, toSqlDate((LocalDate) valores[z][x]));
+                            }
                         } else if (tipoObjeto[z][x].equals(Integer.class)){
-                            stat.setInt(x+1, (Integer) valores[z][x]);
+                            if ( valores[z][x] == null){
+                                stat.setNull(x+1, java.sql.Types.INTEGER);
+                            }else{
+                                stat.setInt(x+1, (Integer) valores[z][x]);
+                            }
                         } else if (tipoObjeto[z][x].equals(Float.class)){
-                            stat.setFloat(x+1, (Float) valores[z][x]);
+                            if ( valores[z][x] == null){
+                                stat.setNull(x+1, java.sql.Types.FLOAT);
+                            }else{
+                                stat.setFloat(x+1, (Float) valores[z][x]);
+                            }
                         } else if (tipoObjeto[z][x].equals(Double.class)){
-                            stat.setDouble(x+1, (Double) valores[z][x]);
+                            if ( valores[z][x] == null){
+                                stat.setNull(x+1, java.sql.Types.DOUBLE);
+                            }else{
+                                stat.setDouble(x+1, (Double) valores[z][x]);
+                            }
                         }
                     }
                     stat.execute();

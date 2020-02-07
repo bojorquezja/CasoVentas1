@@ -2,11 +2,17 @@ package pe.edu.utp.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.toddfast.util.convert.TypeConverter;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import pe.edu.utp.entity.CabGuiaRem;
 import pe.edu.utp.entity.DetGuiaRem;
 import pe.edu.utp.presenter.MVPPresenter;
@@ -139,6 +145,18 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
             }
         });
         this.setLocationRelativeTo(null);
+        DateTimeFormatter ldformat = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        for(int x=0 ; x < tbl0.getColumnModel().getColumnCount() ; x++){
+            tbl0.getColumnModel().getColumn(x).setCellRenderer((TableCellRenderer) new DefaultTableCellRenderer() {
+
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    if( value instanceof LocalDate) {
+                        value = ldformat.format((LocalDate)value);
+                    }
+                    return super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+                }
+            });
+        }
         //corregir Lgooddatepicker
         DatePickerSettings dps = new DatePickerSettings();
         dps.setFormatForDatesCommonEra("dd/MM/yyyy");
@@ -210,6 +228,11 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
                 "Codigo Producto", "Descripcion Producto", "Cantidad"
             }
         ));
+        tbl0.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tbl0FocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl0);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Empresa"));
@@ -434,6 +457,12 @@ public class GuiasRemisionView extends javax.swing.JDialog implements MVPView {
             }
         }
     }//GEN-LAST:event_btn11ActionPerformed
+
+    private void tbl0FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbl0FocusLost
+        if (tbl0.isEditing()) {
+            tbl0.getCellEditor().stopCellEditing();
+        }
+    }//GEN-LAST:event_tbl0FocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
