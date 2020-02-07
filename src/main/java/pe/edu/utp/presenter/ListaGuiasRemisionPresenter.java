@@ -5,6 +5,7 @@ import pe.edu.utp.dao.CabGuiaRemDao;
 import pe.edu.utp.dao.DetGuiaRemDao;
 import pe.edu.utp.model.GuiasRemisionModel;
 import pe.edu.utp.model.MVPModel;
+import pe.edu.utp.util.TypesUtil;
 import pe.edu.utp.view.GuiasRemisionView;
 import pe.edu.utp.view.MVPView;
 
@@ -44,7 +45,7 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
         if (subject.equalsIgnoreCase("Buscar")) {
             //params: codigo GR, cliente
             Object[] listObj = model.loadModel("Listar1", params);
-            view.updateView("Refrescar", new Object[]{listObj[0]});
+            view.updateView("CargarDatos", new Object[]{listObj[0]});
         }
         if (subject.equalsIgnoreCase("Agregar")) {
             //params: codigo GR, cliente
@@ -55,8 +56,7 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
                         new Object[]{"INSERT"});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
-                    Object[] listObj = model.loadModel("Listar1", params);
-                    view.updateView("Refrescar", new Object[]{listObj[0]});
+                    view.updateView("Refrescar", null);
                 }
             });
         }
@@ -69,17 +69,19 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
                         new Object[]{"UPDATE", params[2]});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
-                    Object[] listObj = model.loadModel("Listar1", params);
-                    view.updateView("Refrescar", new Object[]{listObj[0]});
+                    view.updateView("Refrescar", null);
                 }
             });
         }
         if (subject.equalsIgnoreCase("Borrar")) {
             //params: codigo GR, cliente, codigo GR Borrar
             if ( (Boolean) view.updateView("DltBox", new Object[]{""})[0] ){
-                model.updateModel("DeleteCabDet", new Object[]{params[2]});
-                Object[] listObj = model.loadModel("Listar1", params);
-                view.updateView("Refrescar", new Object[]{listObj[0]});
+                try{
+                    model.updateModel("DeleteCabDet", new Object[]{params[2]});
+                    view.updateView("Refrescar", null);
+                }catch(Exception e){
+                    view.updateView("MsgBox", new Object[]{TypesUtil.breakLine(e.toString(), 100)});
+                }
             }
         }
         if (subject.equalsIgnoreCase("Seleccionar")) {

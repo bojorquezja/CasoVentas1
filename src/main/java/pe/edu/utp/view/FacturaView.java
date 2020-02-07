@@ -147,16 +147,15 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
     private void sumaTotales(TableModel tm){
         Double val1=0.0;
         for (int x=0 ; x < tm.getRowCount() ; x++){
-
             try{
                 val1 += TypeConverter.convert(Double.class, tbl0.getValueAt(x, 4));
             }catch(Exception f){
                 val1 += 0.0;
             }
         }
-        tfl7.setText(""+val1);
-        tfl8.setText(""+(val1*0.18));
-        tfl9.setText(""+(val1*1.18));
+        tfl7.setText(""+(Math.round(val1*100.0)/100.0));
+        tfl8.setText(""+(Math.round((val1*0.18)*100.0)/100.0));
+        tfl9.setText(""+(Math.round((val1*1.18)*100.0)/100.0));
     }
     
     public FacturaView(java.awt.Frame parent, boolean modal) {
@@ -490,7 +489,8 @@ public class FacturaView extends javax.swing.JDialog implements MVPView {
         if (tfl7.getText().isEmpty()){
             tfl7.setText("0");
         }
-        
+        TableModel tm = (TableModel) tbl0.getModel();
+        this.sumaTotales(tm);
         CabFactura cgr = new CabFactura(tfl0.getText(), 
                 dtp0.getDate(), 
                 tfl10.getText(),

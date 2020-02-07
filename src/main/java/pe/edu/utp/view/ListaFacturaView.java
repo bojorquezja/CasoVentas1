@@ -65,9 +65,13 @@ public class ListaFacturaView extends javax.swing.JDialog implements MVPView {
             //params[]: Mensaje
             JOptionPane.showMessageDialog(null, params[0]);
         }
-        if (subject.equalsIgnoreCase("Refrescar")) {
+        if (subject.equalsIgnoreCase("CargarDatos")) {
             //params[]: lista
             this.CargaDatos(params);
+        }
+        if (subject.equalsIgnoreCase("Refrescar")) {
+            //params[]: 
+            presenter.notifyPresenter("Buscar", new Object[]{tfl0.getText(), tfl1.getText()});
         }
         return resultUpdateView;
     }
