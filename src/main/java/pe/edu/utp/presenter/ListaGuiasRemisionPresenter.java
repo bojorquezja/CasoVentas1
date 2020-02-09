@@ -22,8 +22,7 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
         this.tipoView = (((String) params[0]).length()>=0) ? (String) params[0] : "SELECT";
         view.setPresenter(this);
         view.updateView("Iniciar", new Object[]{"Guias de Remision", tipoView});
-        Object[] listObj = model.loadModel("Listar1", new Object[]{"", ""});
-        view.updateView("Refrescar", new Object[]{listObj[0]});
+        view.updateView("Refrescar", null);
         view.showView();
     }
     
