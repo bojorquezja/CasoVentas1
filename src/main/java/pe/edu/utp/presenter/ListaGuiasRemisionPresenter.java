@@ -65,7 +65,7 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
                 MVPPresenter p = new GuiasRemisionPresenter(
                         new GuiasRemisionView(null, true), 
                         new GuiasRemisionModel(new CabGuiaRemDao(), new DetGuiaRemDao()), 
-                        new Object[]{"UPDATE", params[2]});
+                        new Object[]{"UPDATE", params[0]});
                 Boolean cambio = (Boolean) p.getResult()[0];   //prueba
                 if (cambio){
                     view.updateView("Refrescar", null);
@@ -76,7 +76,7 @@ public class ListaGuiasRemisionPresenter implements MVPPresenter{
             //params: codigo GR, cliente, codigo GR Borrar
             if ( (Boolean) view.updateView("DltBox", new Object[]{""})[0] ){
                 try{
-                    model.updateModel("DeleteCabDet", new Object[]{params[2]});
+                    model.updateModel("DeleteCabDet", new Object[]{params[0]});
                     view.updateView("Refrescar", null);
                 }catch(Exception e){
                     view.updateView("MsgBox", new Object[]{TypeUtil.breakLine(e.toString(), 100)});
