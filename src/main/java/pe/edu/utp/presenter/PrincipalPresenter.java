@@ -54,7 +54,7 @@ public class PrincipalPresenter implements MVPPresenter{
             if (((String) params[0]).equalsIgnoreCase("MantGuiaRemision")){
                 SwingUtilities.invokeLater(() -> {
                     MVPPresenter p = new ListaGuiasRemisionPresenter(
-                            new ListaGuiasRemisionView(null, true), 
+                            new ListaGuiasRemisionView((JFrame)view, true), 
                             new ListaGuiasRemisionModel(new CabGuiaRemDao(), new DetGuiaRemDao()), 
                             new Object[]{"MAINTENANCE"});
                 });
@@ -62,7 +62,7 @@ public class PrincipalPresenter implements MVPPresenter{
             if (((String) params[0]).equalsIgnoreCase("MantFactura")){
                 SwingUtilities.invokeLater(() -> {
                     MVPPresenter p = new ListaFacturaPresenter(
-                            new ListaFacturaView(null, true), 
+                            new ListaFacturaView((JFrame)view, true), 
                             new ListaFacturaModel(new CabFacturaDao(), new DetFacturaDao()), 
                             new Object[]{"MAINTENANCE"});
                 });
