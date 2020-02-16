@@ -3,6 +3,7 @@ package pe.edu.utp.presenter;
 import pe.edu.utp.entity.CabGuiaRem;
 import pe.edu.utp.entity.DetGuiaRem;
 import pe.edu.utp.model.MVPModel;
+import pe.edu.utp.util.TypeUtil;
 import pe.edu.utp.view.MVPView;
 
 public class ConfiguracionPresenter implements MVPPresenter{
@@ -18,9 +19,14 @@ public class ConfiguracionPresenter implements MVPPresenter{
         this.result = new Object[]{(Boolean) true};
         this.tipoView = (((String) params[0]).length()>=0) ? (String) params[0] : "READ";
         view.setPresenter(this);
-        Object[] ent=this.model.loadModel("Todo", null);
-        view.updateView("Iniciar", new Object[]{"Configuracion", ent});
-        view.showView();
+        try{
+            Object[] ent=this.model.loadModel("Todo", null);
+            view.updateView("Iniciar", new Object[]{"Configuracion", ent});
+            view.showView();
+        }catch(Exception e){
+            view.updateView("MsgBox", new Object[]{TypeUtil.breakLine(e.toString(), 100)});
+        }
+        
     }
     
     @Override
@@ -41,13 +47,21 @@ public class ConfiguracionPresenter implements MVPPresenter{
         //TODO
         if (subject.equalsIgnoreCase("Aceptar")) {
             //params: String[] 6 par
-            model.updateModel("Todo", params);
-            view.closeView();
+            try{
+                model.updateModel("Todo", params);
+                view.closeView();
+            }catch(Exception e){
+                view.updateView("MsgBox", new Object[]{TypeUtil.breakLine(e.toString(), 100)});
+            }
         }
         //TODO Reset y CambioConexion en textfield
         if (subject.equalsIgnoreCase("Reset")) {
-            Object[] ent=this.model.loadModel("Reset", null);
-            view.updateView("Reset", ent);
+            try{
+                Object[] ent=this.model.loadModel("Reset", null);
+                view.updateView("Reset", ent);
+            }catch(Exception e){
+                view.updateView("MsgBox", new Object[]{TypeUtil.breakLine(e.toString(), 100)});
+            }
         }
         if (subject.equalsIgnoreCase("CambioConexion")) {
             //params: 4 String

@@ -20,7 +20,12 @@ public class FacturaPresenter implements MVPPresenter{
         view.setPresenter(this);
         CabFactura ent=null;
         if ( this.tipoView.equalsIgnoreCase("READ") || this.tipoView.equalsIgnoreCase("UPDATE") ){
-            ent = (CabFactura) model.loadModel("CabDet", new Object[]{params[1]})[0];
+            try{
+                ent = (CabFactura) model.loadModel("CabDet", new Object[]{params[1]})[0];
+            }catch(Exception e){
+                view.updateView("MsgBox", new Object[]{TypeUtil.breakLine(e.toString(), 100)});
+            }    
+            
         }
         view.updateView("Iniciar", new Object[]{"Factura", tipoView, ent});
         view.showView();

@@ -20,7 +20,11 @@ public class GuiasRemisionPresenter implements MVPPresenter{
         view.setPresenter(this);
         CabGuiaRem ent=null;
         if ( this.tipoView.equalsIgnoreCase("READ") || this.tipoView.equalsIgnoreCase("UPDATE") ){
-            ent = (CabGuiaRem) model.loadModel("CabDet", new Object[]{params[1]})[0];
+            try{
+                ent = (CabGuiaRem) model.loadModel("CabDet", new Object[]{params[1]})[0];
+            }catch(Exception e){
+                view.updateView("MsgBox", new Object[]{TypeUtil.breakLine(e.toString(), 100)});
+            }
         }
         view.updateView("Iniciar", new Object[]{"Guia de Remision", tipoView, ent});
         view.showView();

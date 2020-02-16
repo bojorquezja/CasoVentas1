@@ -50,3 +50,7 @@ CREATE TABLE detfactura (
   PRIMARY KEY (codigoFac)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*
+CREATE USER 'usuario'@'localhost';
+GRANT ALL PRIVILEGES ON *.* To 'usuario'@'localhost' IDENTIFIED BY 'contrasena';
+*/
