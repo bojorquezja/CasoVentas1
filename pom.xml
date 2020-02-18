@@ -38,7 +38,7 @@
     <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.18</version>
+        <version>8.0.19</version>
     </dependency>
   </dependencies>
 
@@ -60,7 +60,6 @@
                   <mainClass>pe.edu.utp.App</mainClass>
                 </transformer>
               </transformers>
-              <minimizeJar>true</minimizeJar>
             </configuration>
           </execution>
         </executions>
