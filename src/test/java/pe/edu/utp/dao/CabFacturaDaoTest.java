@@ -1,5 +1,6 @@
 package pe.edu.utp.dao;
 
+import pe.edu.utp.data.dao.CabFacturaDao;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import pe.edu.utp.entity.CabFactura;
+import pe.edu.utp.data.entity.CabFactura;
 
 /**
  *
